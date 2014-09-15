@@ -1,0 +1,67 @@
+.container {
+    margin-top: 51px;
+}
+
+.top-scroll-loading, .bottom-scroll-loading {
+    padding: 50px 0px;
+
+    &.loading {
+        background: green;
+        padding: 40px 0px;
+        text-align: center;
+        * {
+            display: initial;
+        }
+    }
+    * {
+        display: none;
+    }
+}
+
+#timeline {
+    .month-heading {
+        box-sizing: border-box;
+        margin-left: 50%;
+        border-left: 1px solid black;
+        padding-left: 10px;
+        font-weight: bold;
+        font-size: 150%;
+        display: block;
+        clear: both;
+    }
+    .content {
+        display: table;
+        width: 100%;
+        .right-content, .left-content {
+            padding-left: 10px;
+            padding-right: 10px;
+            box-sizing: border-box;
+            width: 50%;
+            height: 100%;
+            display: table-cell;
+            vertical-align: top;
+        }
+        .left-content {
+            clear: left;
+        }
+        .right-content {
+            border-left: 1px solid black;
+            clear: right;
+        }
+    }
+}
+
+.trove-content {
+    padding: 10px;
+    margin: 10px 0px;
+    box-sizing: border-box;
+    border: 1px solid black;
+    .trove-article {
+
+    }
+    .trove-picture {
+
+    }
+}
+
+
