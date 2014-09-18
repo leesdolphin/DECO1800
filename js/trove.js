@@ -43,7 +43,7 @@ Trove.date_listing = function(start_year, end_year, page, callback) {
     };
     q = $.extend(q, Trove.defaults);
     if (!start_year) {
-        start_year = "1";
+        start_year = "1000";
         q["sortby"] = "datedesc";
     }
     if (!end_year) {

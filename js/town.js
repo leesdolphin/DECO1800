@@ -18,8 +18,11 @@ MONTH_NAMES = {
     12: ["Jan", "December"]
 };
 
-make_year = function(year, months) {
-    var after, before, e, elm, m, timeline, yr, yrid, children, _results;
+function make_year(year, months) {
+    var after, before, e, elm, m, timeline, yr, yrid, children;
+    if (!months || months.length === 0) {
+        months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+    }
     year = parseInt(year);
     timeline = $("#timeline");
     before = elm = after = 0;
@@ -52,24 +55,75 @@ make_year = function(year, months) {
             $(after).after(elm);
         }
     }
-    elm.empty();
-    _results = [];
-    for (m = 1; m <= 12; m++) {
-        e = $("<div></div>");
-        elm.append($("<div class='month-heading'>" + MONTH_NAMES[m][1] + " " + year + "</div>"));
-        e.attr("id", "y" + year + "m" + m);
-        elm.append(e);
+    for (i = 0; i < months.length; i++) {
+        m = months[i];
+        ymid = "y" + year + "m" + m;
+        if (elm.find("#" + ymid).length === 0) {
+            e = $("<div></div>");
+            e.append($("<div class='month-heading'>" + MONTH_NAMES[m][1] + " " + year + "</div>"));
+            e.append($("<div class='content'></div>"));
+            e.attr("id", ymid);
+            elm.append(e); // This will need to be changed to put the stuff in the right palce.
+        }
     }
-};
+}
 
-$(function() {
-    $.extend(Trove.defaults, {
-        q: town,
-        include: "articletext,links,years",
-        zone: "picture,newspaper,map,article"
-    });
-    for (var yr = 1900; yr <= 2000; yr++) {
-        make_year(yr);
+function get_month_for(year, month) {
+    ymid = "#y" + year + "m" + month;
+    month_container = $("#timeline").find(ymid);
+    if (month_container.length === 0) {
+        make_year(year, [month]);
     }
+    return month_container.find(".content");
+}
+
+$.extend(Trove.defaults, {
+    q: town,
+    include: "articletext,links,years",
+    zone: "newspaper"
 });
 
+function parse_date(date_string) {
+    // DAte: yyyy-mm-dd
+    date_split = date_string.split("-");
+    switch (date_split.length) {
+        case 1:
+            return {y: parseInt(date_split[0]), m: -1, d: -1};
+        case 2:
+            return {y: parseInt(date_split[0]), m: parseInt(date_split[1]), d: -1};
+        default:
+            return {y: parseInt(date_split[0]), m: parseInt(date_split[1]), d: parseInt(date_split[2])};
+    }
+}
+
+
+function get_trove_listing(start, end, page_no) {
+    if (!page_no) {
+        page_no = 0;
+    }
+    Trove.date_listing(start, end, page_no, function(jqxhr, status) {
+        if (status !== "success") {
+            console.log(jqxhr.responseJSON);
+            return get_trove_listing(start, end, page_no);
+        }
+        var data = jqxhr.responseJSON.response.zone[0].records.article;
+        for (var i = 0; i < data.length; i++) {
+            var d = data[i];
+            var date = parse_date(d.date);
+            var content = get_month_for(date.y, date.m);
+            var c = $("<div></div>");
+            c.html(d.articleText);
+            
+            content.append(c);
+            
+        }
+    });
+}
+
+
+
+$(function() {
+    console.log("ASDF");
+    get_trove_listing(1950, false, 0);
+    get_trove_listing(false, 1950, 0);
+});
