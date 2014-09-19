@@ -28,25 +28,7 @@ if (!isset($_GET["town"])) {
             <div class="top-scroll-loading">
                 <div>Loading More Content</div>
             </div>
-            <div id="timeline">
-                <div id="y1900">
-                    <div id="y1900m1">
-                        <div class="month-heading">January 1900</div>
-                        <div class="content">
-                            <div class="left-content">
-                                <div class="trove-content trove-article"></div>
-                                <div class="trove-content trove-picture"></div>
-                                <div class="trove-content trove-article"></div>
-                            </div>
-                            <div class="right-content">
-                                <div class="trove-content trove-article"></div>
-                                <div class="trove-content trove-picture"></div>
-                                <div class="trove-content trove-article"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <div id="timeline"></div>
             <div class="bottom-scroll-loading">
                 <div>Loading More Content</div>
             </div>
