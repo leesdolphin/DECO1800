@@ -26,7 +26,7 @@
     border-left: 1px solid black;
     padding-left: 10px;
     font-weight: bold;
-    font-size: 150%;
+    font-size: 200%;
     display: block;
     clear: both; 
 }
@@ -41,6 +41,7 @@
     padding-right: 10px;
     box-sizing: border-box;
     width: 50%;
+    max-width: 50%;
     height: 100%;
     display: table-cell;
     vertical-align: top;
@@ -60,4 +61,38 @@
     margin: 10px 0px;
     box-sizing: border-box;
     border: 1px solid black; 
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+}
+
+.trove-content .trove-content-row {
+    position: relative;
+    
+}
+.trove-content .heading-wrapper {
+    width: 100%;
+    padding-right: 7em;
+    display: inline-block;
+}
+.trove-content .heading {
+    font-size: 140%;
+    font-weight: bold;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.trove-content .date {
+    position: absolute;
+    float: right;
+    color: #666;
+    white-space: nowrap;  
+    text-align: right;  
+    width: 7em;
+    right: 0;
+    top: 0;
+}
+.trove-content .body {
+    overflow-y: hidden;
+    max-height: 10em;
 }
