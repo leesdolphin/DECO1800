@@ -1,56 +1,63 @@
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/lee\/NetBeansProjects\/DECO1800\/scss\/town\.scss}line{font-family:\000031}}
 .container {
-  margin-top: 51px; }
+    margin-top: 51px;
+}
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/lee\/NetBeansProjects\/DECO1800\/scss\/town\.scss}line{font-family:\000035}}
 .top-scroll-loading, .bottom-scroll-loading {
-  padding: 50px 0px; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/lee\/NetBeansProjects\/DECO1800\/scss\/town\.scss}line{font-family:\000038}}
-  .top-scroll-loading.loading, .bottom-scroll-loading.loading {
+    padding: 50px 0px;
+}
+
+.top-scroll-loading.loading, .bottom-scroll-loading.loading {
     background: green;
     padding: 40px 0px;
-    text-align: center; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/lee\/NetBeansProjects\/DECO1800\/scss\/town\.scss}line{font-family:\0000312}}
-    .top-scroll-loading.loading *, .bottom-scroll-loading.loading * {
-      display: initial; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/lee\/NetBeansProjects\/DECO1800\/scss\/town\.scss}line{font-family:\0000316}}
-  .top-scroll-loading *, .bottom-scroll-loading * {
-    display: none; }
+    text-align: center;
+}
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/lee\/NetBeansProjects\/DECO1800\/scss\/town\.scss}line{font-family:\0000322}}
+.top-scroll-loading.loading *, .bottom-scroll-loading.loading * {
+    display: initial; 
+}
+
+.top-scroll-loading *, .bottom-scroll-loading * {
+    display: none; 
+}
+
 #timeline .month-heading {
-  box-sizing: border-box;
-  margin-left: 50%;
-  border-left: 1px solid black;
-  padding-left: 10px;
-  font-weight: bold;
-  font-size: 150%;
-  display: block;
-  clear: both; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/lee\/NetBeansProjects\/DECO1800\/scss\/town\.scss}line{font-family:\0000332}}
+    box-sizing: border-box;
+    margin-left: 50%;
+    border-left: 1px solid black;
+    padding-left: 10px;
+    font-weight: bold;
+    font-size: 150%;
+    display: block;
+    clear: both; 
+}
+
 #timeline .content {
-  display: table;
-  width: 100%; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/lee\/NetBeansProjects\/DECO1800\/scss\/town\.scss}line{font-family:\0000335}}
-  #timeline .content .right-content, #timeline .content .left-content {
+    display: table;
+    width: 100%;
+}
+
+#timeline .content .right-content, #timeline .content .left-content {
     padding-left: 10px;
     padding-right: 10px;
     box-sizing: border-box;
     width: 50%;
     height: 100%;
     display: table-cell;
-    vertical-align: top; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/lee\/NetBeansProjects\/DECO1800\/scss\/town\.scss}line{font-family:\0000344}}
-  #timeline .content .left-content {
-    clear: left; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/lee\/NetBeansProjects\/DECO1800\/scss\/town\.scss}line{font-family:\0000347}}
-  #timeline .content .right-content {
-    border-left: 1px solid black;
-    clear: right; }
+    vertical-align: top;
+}
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/lee\/NetBeansProjects\/DECO1800\/scss\/town\.scss}line{font-family:\0000354}}
+#timeline .content .left-content {
+    clear: left; 
+}
+
+#timeline .content .right-content {
+    border-left: 1px solid black;
+    clear: right; 
+}
+
 .trove-content {
-  padding: 10px;
-  margin: 10px 0px;
-  box-sizing: border-box;
-  border: 1px solid black; }
+    padding: 10px;
+    margin: 10px 0px;
+    box-sizing: border-box;
+    border: 1px solid black; 
+}
