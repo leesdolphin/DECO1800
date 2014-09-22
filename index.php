@@ -16,6 +16,8 @@
                         <input class="form-control" type="text" name="town" id="town-name" required placeholder="Town Name" />
                     </div>
                     <input class="btn btn-primary btn-lg" type="submit" id="submit" value="Search"/>
+                    <input class="btn btn-primary btn-lg" type="button" id="openmap" value="Search From Map" />
+                    <!--This is the button for the map, needs to be implemented. Just for the mockup right now.-->
                 </form>
             </div>
         </div>
