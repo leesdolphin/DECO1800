@@ -167,5 +167,5 @@ function get_trove_listing(start, end, page_no) {
 
 $(function () {
     get_trove_listing(1950, false, 0);
-    get_trove_listing(false, 1950, 0);
+    get_trove_listing(false, 1949, 0);
 });
