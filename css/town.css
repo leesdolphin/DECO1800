@@ -20,6 +20,34 @@
     display: none; 
 }
 
+.navbar-timeline {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    padding: 2px 20%;
+    margin: auto;
+    overflow: hidden;
+    height: 50px;
+}
+
+.navbar-timeline #navbar-year-container {
+    margin-right: auto;
+    margin-left: auto;
+    max-width: 95%;
+    text-align: center;
+    border-bottom: 1px solid black;
+    text-overflow-mode: clip;
+    white-space: nowrap;
+}
+
+.navbar-timeline .navbar-year {
+    display: inline;
+    padding: 0 .7em;
+}
+.navbar-timeline .navbar-year.navbar-year-current {
+    font-weight: bold;
+}
+
 #timeline .month-heading {
     box-sizing: border-box;
     margin-left: 50%;
@@ -68,7 +96,7 @@
 
 .trove-content .trove-content-row {
     position: relative;
-    
+
 }
 .trove-content .heading-wrapper {
     width: 100%;

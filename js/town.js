@@ -129,7 +129,7 @@ function get_trove_listing(start, end, page_no) {
     Trove.date_listing(start, end, page_no, function (jqxhr, status) {
         if (status !== "success") {
             console.log(jqxhr.responseJSON);
-            return get_trove_listing(start, end, page_no);
+            //return get_trove_listing(start, end, page_no);
         }
         var data = jqxhr.responseJSON.response.zone[0].records.article;
         for (var i = 0; i < data.length; i++) {
