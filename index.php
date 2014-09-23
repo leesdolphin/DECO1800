@@ -64,6 +64,17 @@
                 });
             }
             google.maps.event.addDomListener(window, 'load', initialize);
+
+            $(function () {
+                $("#town-name").autocomplete({
+                    // does nothing, soz - JACK
+                    source: 'autocomplete.php',
+                    minLength: 1,
+                    select: function (event, ui) {
+                        alert(ui.item.id);
+                    }
+                });
+            });
         </script>
     </body>
 </html>
