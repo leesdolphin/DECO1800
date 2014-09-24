@@ -48,11 +48,10 @@ function initialize() {
 
 $(function () {
     $("#town-name").autocomplete({
-        // does nothing, soz - JACK
         source: 'autocomplete.php',
         minLength: 1,
         select: function (event, ui) {
-            alert(ui.item.id);
+            console.log(ui.item.id);
         }
     });
 });
