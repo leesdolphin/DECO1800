@@ -1,5 +1,4 @@
 <?php
-
 $dbhost = "localhost";
 $dbuser = "site";
 $dbpass = "pass";
@@ -8,7 +7,7 @@ $dbname = "TOWN";
 $con = new mysqli($dbhost, $dbuser, $dbpass, $dbname);
 if (mysqli_connect_errno()) {
     echo "Failed to connect to MySQL: " . mysqli_connect_error();
-    exit;
+    exit();
 }
 
 /* 
@@ -25,10 +24,14 @@ $result = mysqli_query($con,'SELECT TownName FROM TOWNPOP WHERE TownName="'. $_G
  * Executes it
  * Then binds the `TownName` value(from the database) for each row to `$townName`
  */
-$stmt = $con->prepare("SELECT TownName FROM TOWNPOP WHERE TownName LIKE ? Order By TownName asc");
-$stmt->bind_param("s", $_GET["term"]);
+$stmt = $con->prepare("SELECT TownName FROM TOWNPOP WHERE TownName LIKE ? ORDER BY TownName ASC") or die($con->error);
+$term = $_GET["term"] . '%';
+$stmt->bind_param("s", $term) or die($con->error);
 $stmt->execute();
 $stmt->bind_result($townName);
+
+// Set the content type.
+header('Content-Type: application/json');
 
 echo '[';
 if($stmt->fetch()) {
