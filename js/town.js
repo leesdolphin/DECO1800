@@ -6,18 +6,18 @@ window.timeline_db = [];
 
 
 MONTH_NAMES = {
-    1: ["Jan", "January"],
-    2: ["Jan", "Febuary"],
-    3: ["Jan", "March"],
-    4: ["Jan", "April"],
-    5: ["Jan", "May"],
-    6: ["Jan", "June"],
-    7: ["Jan", "July"],
-    8: ["Jan", "August"],
-    9: ["Jan", "September"],
-    10: ["Jan", "October"],
-    11: ["Jan", "November"],
-    12: ["Jan", "December"]
+    1: "January",
+    2: "Febuary",
+    3: "March",
+    4: "April",
+    5: "May",
+    6: "June",
+    7: "July",
+    8: "August",
+    9: "September",
+    10: "October",
+    11: "November",
+    12: "December"
 };
 
 $.extend(Trove.defaults, {
@@ -27,74 +27,84 @@ $.extend(Trove.defaults, {
 });
 
 
-function make_year(year, months) {
-    function make_year_element(year) {
-        var yr_elm = $("<div></div>");
-        yr_elm.attr("id", "y" + year);
-        timeline_db[year] = {
-            element: yr_elm,
-            months: []
-        };
-        return yr_elm;
-    }
-    function make_month_element(year, month) {
-        e = $("<div></div>");
-        e.append($("<div class='month-heading'>" + MONTH_NAMES[month][1] + " " + year + "</div>"));
-        e.append($("<div class='content'><div class='left-content'></div><div class='right-content'></div></div>"));
-        e.attr("id", "y" + year + "m" + month);
-        timeline_db[year].months[month] = e;
-        return e;
-    }
-
-    if (!months || months.length === 0) {
-        months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-    }
-    var year = parseInt(year);
-    var timeline = $("#timeline");
-    if (timeline_db.length <= year) {
+function add_ordered_element(id, stored_array, parent, maker_function) {
+    if (stored_array.length <= id) {
         // We don't have any years after this one.
-        var yr_elm = make_year_element(year);
-        timeline.append(yr_elm);
-    } else if (timeline_db[year] === undefined) {
-        for (var i = year + 1; i < timeline_db.length; i++) {
-            if (timeline_db[i] !== undefined) {
+        var m_elm = maker_function();
+        parent.append(m_elm.element);
+        stored_array[id] = m_elm;
+    } else if (stored_array[id] === undefined) {
+        for (var i = id + 1; i < stored_array.length; i++) {
+            if (stored_array[i] !== undefined) {
                 // Found a year that is after the current one.
-                var yr_elm = make_year_element(year);
-                timeline_db[i].element.before(yr_elm);
-                break;
-            }
-        }
-    }
-    // The year now exists and has stuff ready.
-
-    var yr_data = timeline_db[year];
-    var elm = yr_data.element;
-    for (i = 0; i < months.length; i++) {
-        var month = months[i];
-        if (yr_data.months.length <= month) {
-            // We don't have any years after this one.
-            var m_elm = make_month_element(year, month);
-            elm.append(m_elm);
-        } else if (yr_data.months[month] === undefined) {
-            for (var i = month + 1; i < yr_data.months.length; i++) {
-                if (yr_data.months[i] !== undefined) {
-                    // Found a year that is after the current one.
-                    var m_elm = make_month_element(year, month);
-                    yr_data.months[i].before(m_elm);
-                    break;
-                }
+                var m_elm = maker_function();
+                stored_array[i].element.before(m_elm.element);
+                stored_array[id] = m_elm;
+                return;
             }
         }
     }
 }
 
 
-function get_month_for(year, month) {
-    ymid = "#y" + year + "m" + month;
-    if ($("#timeline").find(ymid).length === 0) {
-        make_year(year, [month]);
+function make_year(year, months) {
+    if (!months || months.length === 0) {
+        months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
     }
-    return $("#timeline").find(ymid).find(".content");
+    var year = parseInt(year);
+    add_ordered_element(year, timeline_db, $("#timeline"), function () {
+        var yr_elm = $("<div></div>");
+        yr_elm.attr("id", "y" + year);
+        return {
+            element: yr_elm,
+            months: []
+        };
+    });
+    // The year now exists and has stuff ready.
+
+    var yr_data = timeline_db[year];
+    var elm = yr_data.element;
+    for (i = 0; i < months.length; i++) {
+        var month = months[i];
+        add_ordered_element(month, yr_data.months, elm, function () {
+            // Make the month elements 
+            var e = $("<div></div>");
+            e.attr("id", "y" + year + "m" + month);
+            var content = $("<div class='content'></div>");
+            e.append($("<div class='month-heading'>" + MONTH_NAMES[month] + " " + year + "</div>"));
+            e.append(content);
+
+            return {
+                element: e,
+                content: content,
+                dates: []
+            };
+        });
+    }
+}
+
+function make_date(year, month, date) {
+    make_year(year, [month]);
+    m = timeline_db[year].months[month];
+    add_ordered_element(date, m.dates, m.content, function () {
+        e = $("<div></div>");
+        e.attr("id", "y" + year + "m" + month + "d" + date);
+        e.append($("<div class='date-heading'>" + date + " " + MONTH_NAMES[month] + " " + year + "</div>"));
+        e.append($("<div class='content'><div class='left-content'></div><div class='right-content'></div></div>"));
+        return {
+            element: e,
+            trove_content: []
+        };
+    });
+}
+
+
+function get_date_for(year, month, date) {
+    var ymdid = "#y" + year + "m" + month + "d" + date;
+    if ($("#timeline").find(ymdid).length === 0) {
+        make_date(year, month, date);
+    }
+    return $("#timeline").find(ymdid).find(".content");
 }
 
 
@@ -103,9 +113,9 @@ function parse_date(date_string) {
     date_split = date_string.split("-");
     switch (date_split.length) {
         case 1:
-            return {y: parseInt(date_split[0]), m: -1, d: -1};
+            return {y: parseInt(date_split[0]), m: 0, d: 0};
         case 2:
-            return {y: parseInt(date_split[0]), m: parseInt(date_split[1]), d: -1};
+            return {y: parseInt(date_split[0]), m: parseInt(date_split[1]), d: 0};
         default:
             return {y: parseInt(date_split[0]), m: parseInt(date_split[1]), d: parseInt(date_split[2])};
     }
@@ -135,30 +145,30 @@ function get_trove_listing(start, end, page_no) {
         for (var i = 0; i < data.length; i++) {
             var d = data[i];
             var date = parse_date(d.date);
-            var content = get_month_for(date.y, date.m);
-            
+            var content = get_date_for(date.y, date.m, date.d);
+
             var left = content.find(".left-content");
             var right = content.find(".right-content");
-            
+
             var ll = height_of_children(left);
             var rl = height_of_children(right);
 
             var c = $("<div class='trove-content trove-newpapaer'><div class='trove-content-row'><div class='heading-wrapper'><div class='heading'></div></div><div class='date'></div></div><div class='trove-content-row'><div class='body'></div></div></div>");
-            
+
             var text = d.articleText.replace(htmlTag, "");
-            
+
             c.attr("id", d.id);
-            
+
             c.find('.body').text(text);
             c.find('.heading').text(d.heading);
             c.find('.date').text(d.date);
-            
+
             database[d.id] = d;
 
-            if(rl < ll) {
+            if (rl < ll) {
                 right.append(c);
             } else {
-                left.append(c);              
+                left.append(c);
             }
         }
     });

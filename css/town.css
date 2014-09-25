@@ -24,20 +24,23 @@
     position: absolute;
     width: 100%;
     left: 0;
-    padding: 2px 20%;
+    padding: 2px 12em;
     margin: auto;
     overflow: hidden;
     height: 50px;
 }
 
-.navbar-timeline #navbar-year-container {
+.navbar-timeline #navbar-year-container, .navbar-timeline #navbar-month-container {
     margin-right: auto;
     margin-left: auto;
-    max-width: 95%;
     text-align: center;
     border-bottom: 1px solid black;
     text-overflow-mode: clip;
     white-space: nowrap;
+}
+
+.navbar-timeline #navbar-month-container {
+    border: 0;
 }
 
 .navbar-timeline .navbar-year {
@@ -45,6 +48,14 @@
     padding: 0 .7em;
 }
 .navbar-timeline .navbar-year.navbar-year-current {
+    font-weight: bold;
+}
+
+.navbar-timeline .navbar-month {
+    display: inline;
+    padding: 0 .7em;
+}
+.navbar-timeline .navbar-month.navbar-month-current {
     font-weight: bold;
 }
 
@@ -121,6 +132,6 @@
     top: 0;
 }
 .trove-content .body {
-    overflow-y: hidden;
+    overflow: hidden;
     max-height: 10em;
 }

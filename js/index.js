@@ -2,7 +2,7 @@
 var geocode = '';
 var latcoord, longcoord;
 $("#openmap").click(function () {
-    var x, y
+    var x, y;
     y = ($(document).height() / 4) * 3;
     x = ($(document).width() / 4) * 3;
     $("#mapbox").dialog({ draggable: false, height: y, width: x, modal: true, beforeClose: MapClose });
