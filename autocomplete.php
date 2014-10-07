@@ -25,7 +25,7 @@ $result = mysqli_query($con,'SELECT TownName FROM TOWNPOP WHERE TownName="'. $_G
  * Executes it
  * Then binds the `TownName` value(from the database) for each row to `$townName`
  */
-$stmt = $con->prepare("SELECT TownName FROM TOWNPOP WHERE TownName LIKE ? ORDER BY TownName ASC") or die($con->error);
+$stmt = $con->prepare("SELECT TownName FROM TOWNPOP WHERE TownName LIKE ? ORDER BY TownName ASC LIMIT 6") or die($con->error);
 $term = $_GET["term"] . '%';
 $stmt->bind_param("s", $term) or die($con->error);
 $stmt->execute();
