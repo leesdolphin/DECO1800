@@ -56,6 +56,18 @@ function initialize() {
     };
     var map = new google.maps.Map(document.getElementById('mapbox'), mapOptions);
 
+    google.maps.event.addListener(map, 'dragend',
+    function () {
+        alert('hey');
+        console.log('hey');
+        /*marker.setMap(null);
+        marker = new google.maps.Marker({
+        position: center,
+        map: map,
+        draggable: true
+        });*/
+    });
+
     // Creates the marker on the centre of the map
     var center = map.getCenter();
     var marker = new google.maps.Marker({
@@ -76,16 +88,8 @@ function initialize() {
     });
 
     // Move the marker so it is centered after the map is moved - TO BE COMPLETED
-    /*
-    google.maps.event.addListener(map, 'dragend',
-    function () {
-        marker.setMap(null);
-        marker = new google.maps.Marker({
-            position: center,
-            map: map,
-            draggable: true
-        });
-    });*/
+
+    
 }
 //------------------------end of maps------------------------
 
