@@ -2,22 +2,10 @@
     margin-top: 51px;
 }
 
-.top-scroll-loading, .bottom-scroll-loading {
-    padding: 50px 0px;
-}
-
-.top-scroll-loading.loading, .bottom-scroll-loading.loading {
-    background: green;
-    padding: 40px 0px;
-    text-align: center;
-}
-
-.top-scroll-loading.loading *, .bottom-scroll-loading.loading * {
-    display: initial;
-}
-
-.top-scroll-loading *, .bottom-scroll-loading * {
-    display: none;
+#loading-spinner {
+    margin-right: 15px;
+    /* text-top seems to center the spinner the best.*/
+    vertical-align: text-top;
 }
 
 .navbar-timeline {
