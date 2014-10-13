@@ -28,6 +28,6 @@ h1, p, input, button{
 }
 
 body {
-    background-image: url('/images/paper.png');
+    background-image: url('images/paper.png');
     line-height: 2em;
 }
