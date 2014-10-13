@@ -14,33 +14,18 @@
                 <p>Find your town, explore its history.</p>
                 <form action="town.php" method="GET" id="townform">
                     <div class="form-group form-group-lg" >
-                        <!--<input class="form-control" type="search" name="town" id="town-name" required placeholder="Town Name" />
-                        <span class="glyphicon glyphicon-search" id="submitspan"></span>
-
-                        <div class="input-group">
-                            <input type="text" class="form-control" name="town" id="town-name" required placeholder="Town Name"/>
-                            <span class="input-group-addon">
-                                <i class="fa fa-search"><button type="submit"><span class="glyphicon glyphicon-search" id="submitspan"></span></button></i>
-                            </span>
-                        </div>
-
-                        <div class="input-group">
-                           <input type="text" class="form-control" name="town" id="town-name" required placeholder="Town Name">
-                           <button class="input-group-addon"><span class="glyphicon glyphicon-search" ></span></button>
-                        </div>-->
-
                          <div class="input-group">
                             <input type="text" class="form-control" name="town" id="town-name" required placeholder="Town Name">
-                            <button class="input-group-addon" id="submit"><span class="glyphicon glyphicon-search" ></span></button>
-                            <button class="btn" type="button"  id="openmap">
-                                <span class="glyphicon glyphicon-map-marker"></span>
-                            </button>
+                            <span class="input-group-btn">
+                                <button type="submit" class="btn" id="submit">
+                                    <span class="glyphicon glyphicon-search" ></span>
+                                </button>
+                                <button type="button" class="btn" id="openmap">
+                                    <span class="glyphicon glyphicon-map-marker"></span>
+                                </button>
+                            </span>
                         </div>
                     </div>
-                    <!--<input class="btn btn-primary btn-lg" type="submit" id="submit" value="Search"/>                  
-                    <button class="btn btn-default btn-lg" type="button"  id="openmap">
-                        Map <span class="glyphicon glyphicon-map-marker"></span>
-                    </button>-->
                 </form>
             </div>
         </div>

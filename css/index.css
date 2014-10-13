@@ -8,19 +8,25 @@ h1, p, input, button{
 
 
 #town-name {
-    width: 70%;
+    /*width: 70%;*/
 }
 
 .input-group {
     width: 100%;
 }
 
-#submit {
-    height: 34px;
+#submit, #openmap {
+    background-color: #eee;
+    border-color: #ccc;
+}
+#submit:hover, #openmap:hover {
+    background-color: #ddd;
 }
 
 #openmap {
+    /* Old red background color.
     background-color: #eb4141;
+    */
 }
 
 .jumbotron {
