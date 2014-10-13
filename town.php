@@ -14,7 +14,10 @@ if (!isset($_GET["town"])) {
             window.town = <?php echo json_encode($town); ?>;
         </script>
         <link rel="stylesheet" href="css/town.css" />
+        <script src="js/document_utils.js"></script>
         <script src="js/trove.js"></script>
+        <script src="js/town_db_utils.js"></script>
+        <script src="js/town_db.js"></script>
         <script src="js/town.js"></script>
     </head>
     <body>
@@ -62,56 +65,20 @@ if (!isset($_GET["town"])) {
                     </div>
                 </div>
                 <div id="navbar-month-container">
-                    <div class="navbar-month navbar-month-current" id="navbar-month-1">
-                        Jan
-                    </div>
-                    <div class="navbar-month" id="navbar-month-2">
-                        Feb
-                    </div>
-                    <div class="navbar-month" id="navbar-month-3">
-                        Mar
-                    </div>
-                    <div class="navbar-month" id="navbar-month-4">
-                        Apr
-                    </div>
-                    <div class="navbar-month" id="navbar-month-5">
-                        May
-                    </div>
-                    <div class="navbar-month" id="navbar-month-6">
-                        Jun
-                    </div>
-                    <div class="navbar-month" id="navbar-month-7">
-                        Jul
-                    </div>
-                    <div class="navbar-month" id="navbar-month-8">
-                        Aug
-                    </div>
-                    <div class="navbar-month" id="navbar-month-9">
-                        Sep
-                    </div>
-                    <div class="navbar-month" id="navbar-month-10">
-                        Oct
-                    </div>
-                    <div class="navbar-month" id="navbar-month-11">
-                        Nov
-                    </div>
-                    <div class="navbar-month" id="navbar-month-12">
-                        Dec
-                    </div>
+                    Loading
                 </div>
             </div>
             <ul class="nav navbar-nav navbar-left">
                 <li><a class="navbar-brand" href="index.php">Town Timeline</a></li>
             </ul>
+            <ul class="nav navbar-right navbar-text">
+                <li>
+                    <span id="loading-spinner" class="glyphicon glyphicon-refresh hidden"></span>
+                </li>
+            </ul>
         </div>
         <div class="container">
-            <div class="top-scroll-loading">
-                <div>Loading More Content</div>
-            </div>
             <div id="timeline"></div>
-            <div class="bottom-scroll-loading">
-                <div>Loading More Content</div>
-            </div>
         </div>
 
     </body>
