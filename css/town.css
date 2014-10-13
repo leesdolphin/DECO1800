@@ -13,11 +13,11 @@
 }
 
 .top-scroll-loading.loading *, .bottom-scroll-loading.loading * {
-    display: initial; 
+    display: initial;
 }
 
 .top-scroll-loading *, .bottom-scroll-loading * {
-    display: none; 
+    display: none;
 }
 
 .navbar-timeline {
@@ -54,9 +54,18 @@
 .navbar-timeline .navbar-month {
     display: inline;
     padding: 0 .7em;
+    text-decoration: none;
+    color: black;
+    cursor: pointer;
 }
 .navbar-timeline .navbar-month.navbar-month-current {
     font-weight: bold;
+}
+.navbar-timeline .navbar-month.navbar-month-missing {
+    color: #ccc;
+}
+.navbar-timeline .navbar-month:hover {
+    color: #999;
 }
 
 #timeline .month-heading {
@@ -67,7 +76,7 @@
     font-weight: bold;
     font-size: 200%;
     display: block;
-    clear: both; 
+    clear: both;
 }
 
 #timeline .content {
@@ -87,19 +96,25 @@
 }
 
 #timeline .content .left-content {
-    clear: left; 
+    clear: left;
 }
 
 #timeline .content .right-content {
     border-left: 1px solid black;
-    clear: right; 
+    clear: right;
+}
+
+#timeline .date-heading {
+    padding-top: 1px;
+    margin-left: 50%;
+    border-left: 1px solid black;
 }
 
 .trove-content {
     padding: 10px;
     margin: 10px 0px;
     box-sizing: border-box;
-    border: 1px solid black; 
+    border: 1px solid black;
     display: table;
     table-layout: fixed;
     width: 100%;
@@ -125,8 +140,8 @@
     position: absolute;
     float: right;
     color: #666;
-    white-space: nowrap;  
-    text-align: right;  
+    white-space: nowrap;
+    text-align: right;
     width: 7em;
     right: 0;
     top: 0;

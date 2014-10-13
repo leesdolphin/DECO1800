@@ -21,161 +21,139 @@ MONTH_NAMES = {
 };
 
 $.extend(Trove.defaults, {
-    q: town,
+    q: "(" + town + ") -title:(Advertising)",
     include: "articletext,links,years",
     zone: "newspaper"
 });
 
+function load_data_to_dom(data, ignore_scroll) {
 
-function add_ordered_element(id, stored_array, parent, maker_function) {
-    if (stored_array.length <= id) {
-        // We don't have any years after this one.
-        var m_elm = maker_function();
-        parent.append(m_elm.element);
-        stored_array[id] = m_elm;
-    } else if (stored_array[id] === undefined) {
-        for (var i = id + 1; i < stored_array.length; i++) {
-            if (stored_array[i] !== undefined) {
-                // Found a year that is after the current one.
-                var m_elm = maker_function();
-                stored_array[i].element.before(m_elm.element);
-                stored_array[id] = m_elm;
-                return;
+    if ($("#timeline").children().length === 0) {
+        // Nothing in timeline. Just ignore the scrolling stuff.
+        ignore_scroll = true;
+    } else if ($(window).scrollTop() < NAVBAR_HEIGHT) {
+        // The window is near the top. Let's keep it there.
+        ignore_scroll = 1 + $(window).scrollTop(); // Truthy
+    }
+
+    if (!ignore_scroll) {
+        // Select all `date-container`s that are on the screen.
+        var $w = $(window);
+        var $aDateShown = $(".date-container:onScreen");
+        var deltaOffset = $w.scrollTop() - $aDateShown.offset().top;
+        console.log("Old Scroll: ", $w.scrollTop());
+    }
+
+    var id = "trove-content-id-" + data.id;
+
+    var c = $("#" + id);
+    if (c.length === 0) {
+        var c = $(data.to_html_preview(data));
+        c.attr("id", id);
+    }
+
+    var content = get_date_for(data.year, data.month, data.day);
+
+    var left = content.find(".left-content");
+    var right = content.find(".right-content");
+
+    var ll = height_of_children(left);
+    var rl = height_of_children(right);
+
+    if (rl < ll) {
+        right.append(c);
+    } else {
+        left.append(c);
+    }
+    if (!ignore_scroll) {
+        var scroll = $w.scrollTop();
+        $w.scrollTop(deltaOffset + $aDateShown.offset().top);
+        if(scroll != $w.scrollTop()) {
+            console.log("New Scroll: ", $w.scrollTop());
+        }
+    } else if (ignore_scroll !== true) {
+        // ignore scroll is a number(probably).
+        $(window).scrollTop(ignore_scroll - 1); // Decode it.
+    }
+
+    // Now update the headings at the top.
+
+    $myNav = $("#navbar-month-" + data.month);
+    $myNav.removeClass("navbar-month-missing");
+}
+
+function init_navbar_months(current_year) {
+    function update_current_month() {
+        var $m = $(".month-container:onScreen").first();
+        var month = $m.attr("month");
+        $(".navbar-month-current").removeClass("navbar-month-current");
+        $("#navbar-month-" + month).addClass("navbar-month-current");
+    }
+    $(window).scroll(update_current_month);
+    update_current_month();
+
+    navbar_month_click_handler = function(event) {
+        var y = "#y" + current_year;
+        var month = event.data;
+        var $m = $(y + "m" + month);
+        var $w = $(window);
+        if($m.length !== 0) {
+            $w.scrollTop($m.offset().top - NAVBAR_HEIGHT);
+        } else {
+            // Search down then search up.
+            for(var m = month + 1; m <= 12; m++) {
+                $m = $(y + "m" + m);
+                if($m.length !== 0) {
+                    $w.scrollTop($m.offset().top - NAVBAR_HEIGHT);
+                    return;
+                }
             }
-        }
-    }
-}
-
-
-function make_year(year, months) {
-    if (!months || months.length === 0) {
-        months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-    }
-    var year = parseInt(year);
-    add_ordered_element(year, timeline_db, $("#timeline"), function () {
-        var yr_elm = $("<div></div>");
-        yr_elm.attr("id", "y" + year);
-        return {
-            element: yr_elm,
-            months: []
-        };
-    });
-    // The year now exists and has stuff ready.
-
-    var yr_data = timeline_db[year];
-    var elm = yr_data.element;
-    for (i = 0; i < months.length; i++) {
-        var month = months[i];
-        add_ordered_element(month, yr_data.months, elm, function () {
-            // Make the month elements 
-            var e = $("<div></div>");
-            e.attr("id", "y" + year + "m" + month);
-            var content = $("<div class='content'></div>");
-            e.append($("<div class='month-heading'>" + MONTH_NAMES[month] + " " + year + "</div>"));
-            e.append(content);
-
-            return {
-                element: e,
-                content: content,
-                dates: []
-            };
-        });
-    }
-}
-
-function make_date(year, month, date) {
-    make_year(year, [month]);
-    m = timeline_db[year].months[month];
-    add_ordered_element(date, m.dates, m.content, function () {
-        e = $("<div></div>");
-        e.attr("id", "y" + year + "m" + month + "d" + date);
-        e.append($("<div class='date-heading'>" + date + " " + MONTH_NAMES[month] + " " + year + "</div>"));
-        e.append($("<div class='content'><div class='left-content'></div><div class='right-content'></div></div>"));
-        return {
-            element: e,
-            trove_content: []
-        };
-    });
-}
-
-
-function get_date_for(year, month, date) {
-    var ymdid = "#y" + year + "m" + month + "d" + date;
-    if ($("#timeline").find(ymdid).length === 0) {
-        make_date(year, month, date);
-    }
-    return $("#timeline").find(ymdid).find(".content");
-}
-
-
-function parse_date(date_string) {
-    // DAte: yyyy-mm-dd
-    date_split = date_string.split("-");
-    switch (date_split.length) {
-        case 1:
-            return {y: parseInt(date_split[0]), m: 0, d: 0};
-        case 2:
-            return {y: parseInt(date_split[0]), m: parseInt(date_split[1]), d: 0};
-        default:
-            return {y: parseInt(date_split[0]), m: parseInt(date_split[1]), d: parseInt(date_split[2])};
-    }
-}
-
-function height_of_children(node) {
-    var h = 0;
-    var c = node.children();
-    for (var i = 0; i < c.length; i++) {
-        h += $(c[i]).height();
-    }
-    return h;
-}
-
-
-function get_trove_listing(start, end, page_no) {
-    var htmlTag = /<\/?(p|span)>/ig;
-    if (!page_no) {
-        page_no = 0;
-    }
-    Trove.date_listing(start, end, page_no, function (jqxhr, status) {
-        if (status !== "success") {
-            console.log(jqxhr.responseJSON);
-            //return get_trove_listing(start, end, page_no);
-        }
-        var data = jqxhr.responseJSON.response.zone[0].records.article;
-        for (var i = 0; i < data.length; i++) {
-            var d = data[i];
-            var date = parse_date(d.date);
-            var content = get_date_for(date.y, date.m, date.d);
-
-            var left = content.find(".left-content");
-            var right = content.find(".right-content");
-
-            var ll = height_of_children(left);
-            var rl = height_of_children(right);
-
-            var c = $("<div class='trove-content trove-newpapaer'><div class='trove-content-row'><div class='heading-wrapper'><div class='heading'></div></div><div class='date'></div></div><div class='trove-content-row'><div class='body'></div></div></div>");
-
-            var text = d.articleText.replace(htmlTag, "");
-
-            c.attr("id", d.id);
-
-            c.find('.body').text(text);
-            c.find('.heading').text(d.heading);
-            c.find('.date').text(d.date);
-
-            database[d.id] = d;
-
-            if (rl < ll) {
-                right.append(c);
-            } else {
-                left.append(c);
+            for(var m = month - 1; m >= 1; m--) {
+                $m = $(y + "m" + m);
+                if($m.length !== 0) {
+                    $w.scrollTop($m.offset().top - NAVBAR_HEIGHT);
+                    return;
+                }
             }
+            // Oh, we don't have any months - sigh.
+            // We'll just scroll to the top of the page.
+            $w.scrollTop(0);
         }
-    });
+    }
+    $("#navbar-month-container").empty();
+    for(var month = 1; month <= 12; month++) {
+        var c = $("<a></a>").addClass("navbar-month navbar-month-missing");
+        c.text(MONTH_NAMES[month].substring(0,3));
+        c.attr("id", "navbar-month-" + month);
+        c.click(month, navbar_month_click_handler);
+
+        $("#navbar-month-container").append(c);
+    }
 }
 
 
 $(function () {
-    get_trove_listing(1950, false, 0);
-    get_trove_listing(false, 1949, 0);
+    $(document).ajaxStart(function () {
+        $("#loading-spinner").removeClass("hidden");
+    });
+    $(document).ajaxStop(function () {
+        $("#loading-spinner").addClass("hidden");
+    });
+
+    window.NAVBAR_HEIGHT = $(".navbar").first().height()
+
+    // Below is for year init.
+
+    var current_year = 1950;
+    window.current_loader = TroveDB.trove_loaders.get(current_year);
+    window.current_loader.execute();
+
+    init_navbar_months(current_year);
+
+    TroveDB.database.add_data_listener(function (data, year, id) {
+        if (year !== current_year) {
+            return; // Discard event as its data will not be shown.
+        }
+        load_data_to_dom(data);
+    });
 });
