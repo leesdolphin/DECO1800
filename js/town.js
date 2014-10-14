@@ -23,11 +23,11 @@ MONTH_NAMES = {
 $.extend(Trove.defaults, {
     q: "(" + town + ") -title:(Advertising)",
     include: "articletext,links,years",
-    zone: "newspaper"
+    zone: "newspaper,picture"
 });
+Trove.page_size = 50;
 
 function load_data_to_dom(data, ignore_scroll) {
-
     if ($("#timeline").children().length === 0) {
         // Nothing in timeline. Just ignore the scrolling stuff.
         ignore_scroll = true;
@@ -132,7 +132,7 @@ function init_navbar_months(current_year) {
 }
 
 
-$(function () {
+$(window).ready(function () {
     $(document).ajaxStart(function () {
         $("#loading-spinner").removeClass("hidden");
     });
