@@ -185,6 +185,7 @@ $(document).ready(function () {
         if (hash && 1850 <= hash && hash <= 2014) {
             TroveYear.set_year(hash);
         } else {
+            window.location.hash = "#1950"; // TODO change this - maybe.
             // Invalid hash - should probably do something here
         }
     }
