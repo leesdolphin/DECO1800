@@ -1,11 +1,19 @@
-.container {
-    margin-top: 51px;
+
+#timeline-padding {
+    height: 60px;
+    margin-left: 50%;
+    border-left: 1px solid black;
 }
 
 #loading-spinner {
     margin-right: 15px;
     /* text-top seems to center the spinner the best.*/
     vertical-align: text-top;
+}
+
+.navbar-default {
+    background: rgb(240,240,240);
+    border: none;
 }
 
 .navbar-timeline {
@@ -18,23 +26,61 @@
     height: 50px;
 }
 
-.navbar-timeline #navbar-year-container, .navbar-timeline #navbar-month-container {
+#navbar-year-container, #navbar-month-container, #navbar-loading-contaner {
+    position: absolute;
+    height: 20px;
+    left: 12em;
+    right: 12em;
+    border: 0;
+}
+
+#navbar-year-container, #navbar-month-container {
     margin-right: auto;
     margin-left: auto;
     text-align: center;
     text-overflow-mode: clip;
     white-space: nowrap;
-    border: 0;
 }
 
-.navbar-timeline #navbar-loading-contaner {
-    width: 100%;
+#navbar-year-container {
+    top: 2px;
+    overflow-x: hidden;
+    padding: 0px 40px;
+}
+#navbar-year-container .navbar-year {
+    display: inline;
+    margin: 0 .7em;
+    cursor: pointer;
+}
+#navbar-year-container .navbar-year.navbar-year-current {
+    font-weight: bold;
+}
+
+#navbar-year-overlay-left, #navbar-year-overlay-right {
+    height: 20px;
+    width: 40px;
+    position: absolute;
+    top: 0px; 
+    z-index: 3000; /* Be above the rest.*/
+}
+#navbar-year-overlay-left {
+    background-color: rgba(255, 0, 255, 1);
+    left: 12em;
+    background: linear-gradient(to right, rgb(240,240,240), rgba(240,240,240,0.7), rgba(240,240,240,0));
+}
+#navbar-year-overlay-right {
+    background-color: rgba(0, 255, 0, 0.2);
+    right: 12em;
+    background: linear-gradient(to left, rgb(240,240,240), rgba(240,240,240,0.7), rgba(240,240,240,0));
+}
+
+#navbar-loading-contaner {
     border: 0;
     height: 1px;
+    top: 22px;
     background-color: #ccc;
-    border-left: solid black 0px;
 }
-.navbar-timeline #navbar-loading-contaner-fill {
+#navbar-loading-contaner #navbar-loading-contaner-fill {
     left: 0;
     top: 0;
     width: 0px;
@@ -43,17 +89,14 @@
     background-color: black;
 }
 
+#navbar-month-container {
+    top: 23px;
+}
+
 .navbar-timeline #navbar-month-container {
     border: 0;
 }
 
-.navbar-timeline .navbar-year {
-    display: inline;
-    padding: 0 .7em;
-}
-.navbar-timeline .navbar-year.navbar-year-current {
-    font-weight: bold;
-}
 
 .navbar-timeline .navbar-month {
     display: inline;

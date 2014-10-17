@@ -26,6 +26,8 @@ if (!isset($_GET["town"])) {
     <body>
         <div class="navbar navbar-fixed-top navbar-default">
             <div class="navbar-timeline">
+                <div id="navbar-year-overlay-left"></div>
+                <div id="navbar-year-overlay-right"></div>
                 <div id="navbar-year-container">
                     Loading
                 </div>
@@ -46,6 +48,7 @@ if (!isset($_GET["town"])) {
             </ul>
         </div>
         <div class="container">
+            <div id="timeline-padding"></div>
             <div id="timeline"></div>
         </div>
 

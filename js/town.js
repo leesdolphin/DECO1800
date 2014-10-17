@@ -34,5 +34,4 @@ $(window).ready(function () {
     $(document).ajaxStop(function () {
         $("#loading-spinner").addClass("hidden");
     });
-
 });
