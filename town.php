@@ -19,6 +19,8 @@ if (!isset($_GET["town"])) {
         <script src="js/town_db_utils.js"></script>
         <script src="js/town_db_picture.js"></script>
         <script src="js/town_db.js"></script>
+        <script src="js/town_month.js"></script>
+        <script src="js/town_year.js"></script>
         <script src="js/town.js"></script>
     </head>
     <body>

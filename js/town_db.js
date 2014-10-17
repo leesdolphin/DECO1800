@@ -40,7 +40,7 @@ window.TroveDB = function () {
                 }
                 this._id_by_year[year].push(id);
 
-                for(var i = 0; i < this._data_add_listeners.length; i++) {
+                for (var i = 0; i < this._data_add_listeners.length; i++) {
                     this._data_add_listeners[i](data_object, year, id);
                 }
                 return true;
@@ -111,16 +111,20 @@ window.create_queue = function () {
         c.find('.heading').text(data.heading);
         c.find('.date').text(data.date);
         return c;
-    };
+    }
 
     function success_callback(queue, data) {
         var total = 0;
         var zones = data.response.zone;
-        for(var zoneNo = 0; zoneNo < zones.length; zoneNo++) {
+        for (var zoneNo = 0; zoneNo < zones.length; zoneNo++) {
             var zoneData = zones[zoneNo].records;
             var zoneType = zones[zoneNo].name;
             total += parseInt(zoneData.total);
-            if(zoneType === "newspaper") {
+            if (zoneData.n === "0") {
+                // No data - no point.
+                continue;
+            }
+            if (zoneType === "newspaper") {
                 for (var i = 0; i < zoneData.article.length; i++) {
                     var content = $.extend({}, zoneData.article[i]);
                     var date = parse_date(content.date);
@@ -133,15 +137,27 @@ window.create_queue = function () {
             } else if (zoneType === "picture") {
                 for (var i = 0; i < zoneData.work.length; i++) {
                     var content = $.extend({}, zoneData.work[i]);
-                    if(!content.date) {
+                    if (!content.date) {
                         content.date = content.issued;
                     }
-                    if(content.date) {
+                    if (content.date) {
                         var date = parse_date(content.date);
                     }
-                    if(date === undefined) {
+                    if (date === undefined) {
                         continue;
                     }
+                    if (date.d === 0) {
+                        content.date_generated = true;
+                        content.original_date = $.extend({}, date);
+                        var id = parseInt(content.id);
+                        if (date.m === 0) {
+                            date.m = (id % 12) + 1;
+                            date.d = (((id - (id % 12)) / 12) % 31) + 1;
+                        } else {
+                            date.d = (id % 31) + 1;
+                        }
+                    }
+
                     content.year = date.y;
                     content.month = date.m;
                     content.day = date.d;
@@ -153,15 +169,15 @@ window.create_queue = function () {
         var displayed = TroveDB.database.get_year_data(queue.start_year).length;
 
         var percentage = (total > 0 ? displayed / total : 1) * 100;
-        $("#navbar-loading-contaner-fill").css("width",  percentage + "%");
-    };
-
+        $("#navbar-loading-contaner-fill").css("width", percentage + "%");
+    }
 
     function create_queue_(start, end, page_no) {
         if (!page_no) {
             page_no = 0;
         }
-        t = Trove.loading_queue(start, end, page_no, success_callback, function () {});
+        t = Trove.loading_queue(start, end, page_no, success_callback, function () {
+        });
         return t;
     }
     return create_queue_;

@@ -2,21 +2,21 @@
 window.troveHtmlTagRegexp = /<\/?(p|span)>/ig;
 
 /**
-* Add an element into an array so that it is in the correct position. Also
-*  adds the element to the page.
-*
-* If there are no elements after the `id` then it is added at `id` and
-*  appended to the end of `parent` using `parent.append(maker_function().element)`
-*
-* Otherwise it looks for the smallest element after `id` which has a value
-*  and adds the new element before it(so that it appears in order).
-*
-* If there is already an element at `id` in the array then `maker_function` is
-*  not called.
-* If the array is not valid(the last element(array.length-1) is undefined) then
-*  this function may break.
-*
-*/
+ * Add an element into an array so that it is in the correct position. Also
+ *  adds the element to the page.
+ *
+ * If there are no elements after the `id` then it is added at `id` and
+ *  appended to the end of `parent` using `parent.append(maker_function().element)`
+ *
+ * Otherwise it looks for the smallest element after `id` which has a value
+ *  and adds the new element before it(so that it appears in order).
+ *
+ * If there is already an element at `id` in the array then `maker_function` is
+ *  not called.
+ * If the array is not valid(the last element(array.length-1) is undefined) then
+ *  this function may break.
+ *
+ */
 function add_ordered_element(id, stored_array, parent, maker_function) {
     if (stored_array.length <= id) {
         // We don't have any numbers after this one.
@@ -37,8 +37,8 @@ function add_ordered_element(id, stored_array, parent, maker_function) {
 }
 
 /**
-* Returns the content div for a given year/month/day, creating it as necesary.
-*/
+ * Returns the content div for a given year/month/day, creating it as necesary.
+ */
 function get_date_for(year, month, date) {
     var ymdid = "#y" + year + "m" + month + "d" + date;
     if ($("#timeline").find(ymdid).length === 0) {
@@ -50,9 +50,9 @@ function get_date_for(year, month, date) {
 
 function parse_date(date_string) {
     // DAte: yyyy-mm-dd
-    if(date_string === undefined) {
+    if (date_string === undefined) {
         return undefined;
-    } else if($.isNumeric(date_string)) {
+    } else if ($.isNumeric(date_string)) {
         return {y: date_string, m: 0, d: 0};
     }
     date_split = date_string.split("-");
@@ -60,17 +60,17 @@ function parse_date(date_string) {
         return {y: parseInt(date_split[0]), m: 0, d: 0};
     } else if (date_split.length === 2) {
         var m = parseInt(date_split[1]);
-        if(m > 12 || m < 1){
+        if (m > 12 || m < 1) {
             return {y: parseInt(date_split[0]), m: 0, d: 0};
         }
         return {y: parseInt(date_split[0]), m: m, d: 0};
     } else {
         var m = parseInt(date_split[1]);
-        if(m > 12 || m < 1){
+        if (m > 12 || m < 1) {
             return {y: parseInt(date_split[0]), m: 0, d: 0};
         }
-        var d = parseInt(date_split[1]);
-        if(d > 31 || d < 1){
+        var d = parseInt(date_split[2]);
+        if (d > 31 || d < 1) {
             return {y: parseInt(date_split[0]), m: m, d: 0};
         }
         return {y: parseInt(date_split[0]), m: m, d: d};
