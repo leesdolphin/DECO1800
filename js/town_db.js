@@ -115,11 +115,13 @@ window.create_queue = function () {
 
     function success_callback(queue, data) {
         var total = 0;
+        var num_ret = 0;
         var zones = data.response.zone;
         for (var zoneNo = 0; zoneNo < zones.length; zoneNo++) {
             var zoneData = zones[zoneNo].records;
             var zoneType = zones[zoneNo].name;
             total += parseInt(zoneData.total);
+            num_ret += parseInt(zoneData.n);
             if (zoneData.n === "0") {
                 // No data - no point.
                 continue;
@@ -131,7 +133,8 @@ window.create_queue = function () {
                     content.year = date.y;
                     content.month = date.m;
                     content.day = date.d;
-                    content.to_html_preview = article_to_html_callback;
+                    content.html_helper = {preview: article_to_html_callback,
+                        full: $.noop()};
                     TroveDB.database.add_data(content);
                 }
             } else if (zoneType === "picture") {
@@ -161,7 +164,7 @@ window.create_queue = function () {
                     content.year = date.y;
                     content.month = date.m;
                     content.day = date.d;
-                    content.to_html_preview = TownPictureHelper.get_function_for_data(content);
+                    content.html_helper = TownPictureHelper.get_function_for_data(content);
                     TroveDB.database.add_data(content);
                 }
             } // TODO add more data types.
@@ -169,15 +172,24 @@ window.create_queue = function () {
         var displayed = TroveDB.database.get_year_data(queue.start_year).length;
 
         var percentage = (total > 0 ? displayed / total : 1) * 100;
+        
+        if (num_ret > 0) {
+            // If there was any data returned then try the next page.
+            // This is because displayed can be off by a couple(considering picture's dates are a bit out).
+            TroveDB.trove_loaders.get(TroveYear.year).execute();
+        } else {
+            queue.complete = true;
+            percentage = 100;
+        }
         $("#navbar-loading-contaner-fill").css("width", percentage + "%");
+        TroveYear.do_layout();
     }
 
     function create_queue_(start, end, page_no) {
         if (!page_no) {
             page_no = 0;
         }
-        t = Trove.loading_queue(start, end, page_no, success_callback, function () {
-        });
+        var t = Trove.loading_queue(start, end, page_no, success_callback);
         return t;
     }
     return create_queue_;

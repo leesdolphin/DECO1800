@@ -97,7 +97,6 @@
     border: 0;
 }
 
-
 .navbar-timeline .navbar-month {
     display: inline;
     padding: 0 .7em;
@@ -151,12 +150,6 @@
     clear: right;
 }
 
-#timeline .date-heading {
-    padding-top: 1px;
-    margin-left: 50%;
-    border-left: 1px solid black;
-}
-
 .trove-content {
     padding: 10px;
     margin: 10px 0px;
@@ -196,4 +189,14 @@
 .trove-content .body {
     overflow: hidden;
     max-height: 10em;
+}
+
+.trove-content.trove-image .body {
+    max-height: none;
+}
+.trove-content.trove-image .body img.thumbnail {
+    max-width: 100%;
+    padding: 0;
+    margin: 0 auto;
+    border: 0;
 }

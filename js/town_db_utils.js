@@ -39,12 +39,12 @@ function add_ordered_element(id, stored_array, parent, maker_function) {
 /**
  * Returns the content div for a given year/month/day, creating it as necesary.
  */
-function get_date_for(year, month, date) {
-    var ymdid = "#y" + year + "m" + month + "d" + date;
-    if ($("#timeline").find(ymdid).length === 0) {
-        make_date(year, month, date);
+function get_month_for(year, month) {
+    var ymid = "#y" + year + "m" + month;
+    if ($("#timeline").find(ymid).length === 0) {
+        make_month(year, month);
     }
-    return $("#timeline").find(ymdid).find(".content");
+    return $("#timeline").find(ymid).find(".content");
 }
 
 
@@ -102,37 +102,14 @@ function make_month(year, month) {
         e.addClass("month-container");
         e.attr("month", month);
         e.attr("year", year);
-        var content = $("<div class='content'></div>");
-        e.append($("<div class='month-heading'>" + MONTH_NAMES[month] + " " + year + "</div>"));
-        e.append(content);
-        return {
-            element: e,
-            content: content,
-            days: []
-        };
-    });
-}
-
-function make_date(year, month, day) {
-    make_month(year, month);
-    m = timeline_db[year].months[month];
-    add_ordered_element(day, m.days, m.content, function () {
-        e = $("<div></div>");
-        e.attr("id", "y" + year + "m" + month + "d" + day);
-        e.addClass("date-container");
-        e.attr("day", day);
-        e.attr("month", month);
-        e.attr("year", year);
-        content = $(" <div class='content'>\n\
+        var content = $("<div class='content'>\n\
         <div class='left-content'></div>\n\
         <div class='right-content'></div>\n\
         </div>");
-        e.append($("<div class='date-heading'></div>"));
+        e.append($("<div class='month-heading'>" + MONTH_NAMES[month] + " " + year + "</div>"));
         e.append(content);
         return {
-            element: e,
-            content: content,
-            trove_content: []
+            element: e
         };
     });
 }

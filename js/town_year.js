@@ -21,6 +21,7 @@ window.TroveYear = function () {
         for (var i = 0; i < data.length; i++) {
             load_data_to_dom(data[i], true);
         }
+        this.do_layout(true);
         $(window).scrollTop(0);
         TroveMonth.update_current_month();
         TroveMonth.update_month_status();
@@ -46,6 +47,33 @@ window.TroveYear = function () {
     };
 
     function load_data_to_dom(data, ignore_scroll) {
+        var id = "trove-content-id-" + data.id;
+        var sort = (data.day <= 9 ? "0" : "") + data.day + "-" + data.id;
+
+        var c = $("#" + id);
+        if (c.length === 0) {
+            var c = $(data.html_helper.preview(data));
+            c.attr("id", id);
+            c.attr("sort", sort);
+            c.addClass("trove-content");
+        }
+
+        var content = get_month_for(data.year, data.month);
+
+        var left = content.find(".left-content");
+        var ll = height_of_children(left);
+        var right = content.find(".right-content");
+        var rl = height_of_children(right);
+
+        if (rl < ll) {
+            right.append(c);
+        } else {
+            left.append(c);
+        }
+
+    }
+
+    TroveYear_.prototype.do_layout = function do_layout(ignore_scroll) {
         if (ignore_scroll || $("#timeline").children().length === 0) {
             // Nothing in timeline. Just ignore the scrolling stuff.
             ignore_scroll = true;
@@ -54,52 +82,62 @@ window.TroveYear = function () {
             ignore_scroll = 1 + $(window).scrollTop(); // Truthy(evaluatues to true when used in an if statement)
         }
 
+        $("#timeline .month-container").each(function(idx, month) {
+            layout_month_internal(month);
+
+            $myNav = $("#navbar-month-" + $(month).attr("month"));
+            $myNav.removeClass("navbar-month-missing");
+        });
+
         if (!ignore_scroll) {
-            // Select all `date-container`s that are on the screen.
+            // Select all `month-container`s that are on the screen.
             var $w = $(window);
-            var $aDateShown = $(".date-container:onScreen");
+            var $aDateShown = $(".month-container:onScreen").first();
             var deltaOffset = $w.scrollTop() - $aDateShown.offset().top;
-            console.log("Old Scroll: ", $w.scrollTop());
         }
 
-        var id = "trove-content-id-" + data.id;
-
-        var c = $("#" + id);
-        if (c.length === 0) {
-            var c = $(data.to_html_preview(data));
-            c.attr("id", id);
-        }
-
-        var content = get_date_for(data.year, data.month, data.day);
-
-        // TODO make this whole thing look better when there is only 1 item in the date.
-
-        var left = content.find(".left-content");
-        var right = content.find(".right-content");
-
-        var ll = height_of_children(left);
-        var rl = height_of_children(right);
-
-        if (rl < ll) {
-            right.append(c);
-        } else {
-            left.append(c);
-        }
         if (!ignore_scroll) {
             var scroll = $w.scrollTop();
             $w.scrollTop(deltaOffset + $aDateShown.offset().top);
             if (scroll !== $w.scrollTop()) {
-                console.log("New Scroll: ", $w.scrollTop());
             }
         } else if (ignore_scroll !== true) {
             // ignore scroll is a number(probably).
+
             $(window).scrollTop(ignore_scroll - 1); // Decode it.
         }
 
         // Now update the headings at the top.
+    };
 
-        $myNav = $("#navbar-month-" + data.month);
-        $myNav.removeClass("navbar-month-missing");
+    function layout_month_internal(month_content) {
+        var content = $(month_content);
+        
+        var mapping = {};
+        var contentIds = content.find(".trove-content").map(function (ixd, item) {
+            var s = $(item).attr("sort");
+            mapping[s] = $(item);
+            $(item).detach();
+            return s;
+        }).sort();
+
+        var left = content.find(".left-content");
+        var ll = height_of_children(left);
+        var right = content.find(".right-content");
+        var rl = height_of_children(right);
+
+        var i = 0;
+        for (; i < contentIds.length; i++) {
+            var id = contentIds[i];
+            var elm = $(mapping[id]);
+            if (rl < ll) {
+                right.append(elm);
+                rl += elm.height();
+            } else {
+                left.append(elm);
+                ll += elm.height();
+            }
+        }
     }
 
     $(document).ready(function () {
@@ -150,7 +188,7 @@ $(document).ready(function () {
                 var dist = left_side ? width - mx : mx;
                 var factor = Math.exp(dist / width) * 5;
             }
-            factor *= (left_side ? -1 : 1)
+            factor *= (left_side ? -1 : 1);
             $("#navbar-year-container").scrollLeft(
                     $("#navbar-year-container").scrollLeft() + factor);
         }
@@ -191,9 +229,4 @@ $(document).ready(function () {
     }
     hash_update();
     $(window).on('hashchange', hash_update);
-
-
-
-
-
 });

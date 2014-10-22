@@ -61,15 +61,20 @@ Trove = function () {
             this.start_year = start_year;
             this.end_year = end_year;
             this.start_page = start_page;
-            this.success_callback = success_callback;
-            this.failure_callback = failure_callback;
+            this.success_callback = success_callback || function() {};
+            this.failure_callback = failure_callback || function() {};
             this.is_executing = false;
             this.page_no = start_page;
             this.last_timeout = 0;
             this.timer = null;
+            this.complete = false;
         }
-        Queue_.prototype.execute = function () {
+        Queue_.prototype.execute = function execute() {
             var q = this;
+            if (this.complete) {
+                // We are complete now; so don't try to run.
+                return;
+            }
             if (this.is_executing) {
                 return;
             }
@@ -84,7 +89,7 @@ Trove = function () {
                     q.timer = setTimeout(function () {
                         // Need a wrapper so that `this` is correct inside the next execute call.
                         q.execute();
-                    });
+                    }, q.last_timeout);
                     q.failure_callback(q);
                 } else {
                     q.last_timeout = 0;
