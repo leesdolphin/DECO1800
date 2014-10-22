@@ -4,6 +4,22 @@ if (!isset($_GET["town"])) {
     header('Location: index.php');
     return;
 }
+
+include_once './include/database.php';
+
+$con = create_con();
+
+$stmt = prepate_stmt($con, "SELECT TownName FROM TOWNPOP WHERE TownName LIKE ? ORDER BY TownName ASC LIMIT 1");
+$stmt->bind_param("s", $term);
+$stmt->execute();
+$num_rows = $stmt->num_rows();
+clean($con, $stmt);
+
+if($num_rows == 0) {
+    header('Location: index.php?invalid&town=' . urlencode($term), 304);
+    return;
+}
+
 ?>
 <!DOCTYPE html>
 <html>
