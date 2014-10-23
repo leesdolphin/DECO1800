@@ -35,3 +35,15 @@ $(window).ready(function () {
         $("#loading-spinner").addClass("hidden");
     });
 });
+
+$(document).ready(function(){
+    $("#lightboxContent").hide();
+    
+    $("#lightboxContent").click(function(){
+        $("#lightboxContent").hide();
+    });
+
+    $("#box").click(function( event ){
+        event.stopPropagation();
+    });
+});
