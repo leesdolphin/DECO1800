@@ -1,6 +1,6 @@
 <?php
 
-include_once './include/database.php';
+include './include/database.php';
 
 $con = create_con();
 /* 
@@ -17,7 +17,8 @@ $result = mysqli_query($con,'SELECT TownName FROM TOWNPOP WHERE TownName="'. $_G
  * Executes it
  * Then binds the `TownName` value(from the database) for each row to `$townName`
  */
-$stmt = prepare_stmt($con, "SELECT TownName FROM TOWNPOP WHERE TownName LIKE ? ORDER BY TownName ASC LIMIT 6");
+$stmt = prepate_stmt($con, "SELECT TownName FROM TOWNPOP WHERE TownName LIKE ? ORDER BY TownName ASC LIMIT 
+6");
 $term = $_GET["term"] . '%';
 $stmt->bind_param("s", $term) or die($con->error);
 $stmt->execute();

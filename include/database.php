@@ -21,7 +21,11 @@ function create_con() {
 }
 
 function prepate_stmt($con, $sql) {
-    return $con->prepare($sql) or die($con->error);
+  $stmt = $con->prepare($sql);
+  if(!$stmt) {
+    die($con->error);
+  }
+  return $stmt;
 }
 
 function clean($con, $stmt) {
