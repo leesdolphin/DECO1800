@@ -188,7 +188,7 @@
     right: 0;
     top: 0;
 }
-.body {
+.trove-content .body {
     overflow: hidden;
     max-height: 10em;
 }
