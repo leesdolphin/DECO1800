@@ -86,18 +86,8 @@ window.TroveDB = function () {
 
 window.create_queue = function () {
     function article_to_html_callback(data) {
-        var c = $("\
-        <div class='trove-content trove-newpapaer'>\n\
-        <div class='trove-content-row'>\n\
-        <div class='heading-wrapper'>\n\
-        <div class='heading'></div>\n\
-        </div>\n\
-        <div class='date'></div>\n\
-        </div>\n\
-        <div class='trove-content-row'>\n\
-        <div class='body'></div>\n\
-        </div>\n\
-        </div>");
+        var c = $(BASE_CONTENT_HTML);
+        c.addClass("trove-newpaper");
 
         var text = "No article text avaliable";
         if (data.articleText) {
@@ -112,6 +102,7 @@ window.create_queue = function () {
         c.find('.body').text(text);
         c.find('.heading').text(data.heading);
         c.find('.date').text(data.date);
+        c.find('.link').text(data.troveUrl).attr('href', data.troveUrl);
         return c;
     }
 

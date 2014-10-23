@@ -1,16 +1,6 @@
 function build_preview_base(data, image) {
-    var c = $("\
-    <div class='trove-content trove-image'>\n\
-    <div class='trove-content-row'>\n\
-    <div class='heading-wrapper'>\n\
-    <div class='heading'></div>\n\
-    </div>\n\
-    <div class='date'></div>\n\
-    </div>\n\
-    <div class='trove-content-row'>\n\
-    <div class='body'></div>\n\
-    </div>\n\
-    </div>");
+    var c = $(BASE_CONTENT_HTML);
+    c.addClass("trove-image");
     c.find(".heading").text(data["title"] || "");
     c.find(".date").text(data.date);
 
