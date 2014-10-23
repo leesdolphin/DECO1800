@@ -160,23 +160,25 @@
     width: 100%;
 }
 
-.trove-content .trove-content-row {
+.trove-content-row {
     position: relative;
-
 }
-.trove-content .heading-wrapper {
+#timeline .preview-hidden {
+    display: none;
+}
+.heading-wrapper {
     width: 100%;
     padding-right: 7em;
     display: inline-block;
 }
-.trove-content .heading {
+.heading {
     font-size: 140%;
     font-weight: bold;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
 }
-.trove-content .date {
+.date {
     position: absolute;
     float: right;
     color: #666;
@@ -186,15 +188,15 @@
     right: 0;
     top: 0;
 }
-.trove-content .body {
+.body {
     overflow: hidden;
     max-height: 10em;
 }
 
-.trove-content.trove-image .body {
+.trove-image .body {
     max-height: none;
 }
-.trove-content.trove-image .body img.thumbnail {
+.trove-image .body img.thumbnail {
     max-width: 100%;
     padding: 0;
     margin: 0 auto;

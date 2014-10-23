@@ -1,8 +1,19 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+window.BASE_CONTENT_HTML = "\
+    <div class=''>\n\
+    <div class='trove-content-row'>\n\
+    <div class='heading-wrapper'>\n\
+    <div class='heading'></div>\n\
+    </div>\n\
+    <div class='date'></div>\n\
+    </div>\n\
+    <div class='trove-content-row preview-hidden'>\n\
+    <a class='link'></a>\n\
+    </div>\n\
+    <div class='trove-content-row'>\n\
+    <div class='body'></div>\n\
+    </div>\n\
+    </div>";
+
 
 window.TroveYear = function () {
     function TroveYear_() {
@@ -88,7 +99,7 @@ window.TroveYear = function () {
             ignore_scroll = 1 + $(window).scrollTop(); // Truthy(evaluatues to true when used in an if statement)
         }
 
-        $("#timeline .month-container").each(function(idx, month) {
+        $("#timeline .month-container").each(function (idx, month) {
             layout_month_internal(month);
 
             $myNav = $("#navbar-month-" + $(month).attr("month"));
@@ -118,7 +129,7 @@ window.TroveYear = function () {
 
     function layout_month_internal(month_content) {
         var content = $(month_content);
-        
+
         var mapping = {};
         var contentIds = content.find(".trove-content").map(function (ixd, item) {
             var s = $(item).attr("sort");
