@@ -56,6 +56,12 @@ window.TroveYear = function () {
             c.attr("id", id);
             c.attr("sort", sort);
             c.addClass("trove-content");
+            
+            $(c).click(function(){
+                $("#box").empty();
+                $("#box").html($(this).html());
+                $("#lightboxContent").show();
+            });
         }
 
         var content = get_month_for(data.year, data.month);
