@@ -3,6 +3,7 @@ function build_preview_base(data, image) {
     c.addClass("trove-image");
     c.find(".heading").text(data["title"] || "");
     c.find(".date").text(data.date);
+    c.find('.link').attr('href', data.troveUrl);
 
     if (image) {
         var i = $("<img alt='No preview avaliable'/>")

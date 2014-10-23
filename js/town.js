@@ -40,7 +40,7 @@ $(document).ready(function(){
     $("#lightboxContent").hide();
     
     $("#lightboxContent").click(function(){
-        $("#lightboxContent").hide();
+        $("#lightboxContent").fadeOut();
     });
 
     $("#box").click(function( event ){

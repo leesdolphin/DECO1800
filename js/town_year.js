@@ -1,17 +1,23 @@
 window.BASE_CONTENT_HTML = "\
-    <div class=''>\n\
-    <div class='trove-content-row'>\n\
-    <div class='heading-wrapper'>\n\
-    <div class='heading'></div>\n\
-    </div>\n\
-    <div class='date'></div>\n\
-    </div>\n\
-    <div class='trove-content-row preview-hidden'>\n\
-    <a class='link'></a>\n\
-    </div>\n\
-    <div class='trove-content-row'>\n\
-    <div class='body'></div>\n\
-    </div>\n\
+    <div>\n\
+        <div class='trove-content-row'>\n\
+            <div class='trove-content-header'>\n\
+                <div class='heading-wrapper'>\n\
+                    <div class='heading'></div>\n\
+                </div>\n\
+                <div class='date-link-wrapper'>\n\
+                    <div class='date-link-wrapper-table'>\n\
+                        <div class='date'></div>\n\
+                        <div class='link'>\n\
+                            <a class='preview-hidden'>Link to Trove</a>\n\
+                        </div>\n\
+                    </div>\n\
+                </div>\n\
+            </div>\n\
+        </div>\n\
+        <div class='trove-content-row trove-content-body'>\n\
+            <div class='body'></div>\n\
+        </div>\n\
     </div>";
 
 
@@ -67,11 +73,11 @@ window.TroveYear = function () {
             c.attr("id", id);
             c.attr("sort", sort);
             c.addClass("trove-content");
-            
-            $(c).click(function(){
+
+            $(c).click(function () {
                 $("#box").empty();
                 $("#box").html($(this).html());
-                $("#lightboxContent").show();
+                $("#lightboxContent").fadeIn();
             });
         }
 
