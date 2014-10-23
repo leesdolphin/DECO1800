@@ -18,6 +18,6 @@ function doRequest($url) {
     
     curl_close($http);
     
-    return [body   => $body,
-            status => intval($http_status)];
+    return ['body'   => $body,
+            'status' => intval($http_status)];
 }
