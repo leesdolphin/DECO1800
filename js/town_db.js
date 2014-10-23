@@ -1,3 +1,5 @@
+window.MAX_DISPALYED = 500;
+
 window.TroveDB = function () {
     var Database = function () {
         function Database() {
@@ -171,9 +173,11 @@ window.create_queue = function () {
         }
         var displayed = TroveDB.database.get_year_data(queue.start_year).length;
 
+        var total = Math.min(total, MAX_DISPALYED);
+
         var percentage = (total > 0 ? displayed / total : 1) * 100;
         
-        if (num_ret > 0) {
+        if (num_ret > 0 && TroveDB.database.get_year_data(queue.start_year).length < MAX_DISPALYED) {
             // If there was any data returned then try the next page.
             // This is because displayed can be off by a couple(considering picture's dates are a bit out).
             TroveDB.trove_loaders.get(TroveYear.year).execute();
