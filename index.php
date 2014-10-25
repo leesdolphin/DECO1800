@@ -29,7 +29,12 @@
                 </form>
             </div>
         </div>
-        <div id="mapbox"></div>
+        <div id="mapbox">
+            <div id="mapdiv"></div>
+            <!--<div id="mapclose">
+                <button type="button" class="btn" id="closebutton">Close Map</button>
+            </div>-->
+        </div>
         <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD_BwCPZ-1J8sAyMObpRo0EkoB7D-95Y7E"></script>
         <script type="text/javascript" src="js/index.js"></script>
     </body>
