@@ -6,7 +6,6 @@ h1, p, input, button{
     font-family: 'Droid Serif', serif;
 }
 
-
 #town-name {
     /*width: 70%;*/
 }
@@ -36,4 +35,28 @@ h1, p, input, button{
 body {
     background-image: url('images/paper.png');
     line-height: 2em;
+}
+
+#closebutton{
+    vertical-align: middle;
+}
+
+.no-close .ui-dialog-titlebar-close {
+    display: none;
+}
+
+.ui-dialog-buttonset{
+    width: 100%;
+}
+
+.ui-dialog-buttonset button{
+    float: right;
+}
+
+.ui-dialog-buttonset #maptext{
+    display: inline;
+}
+
+.ui-dialog-titlebar{
+    display: none;
 }
