@@ -150,6 +150,12 @@
     clear: right;
 }
 
+#timeline .date-heading {
+    padding-top: 1px;
+    margin-left: 50%;
+    border-left: 1px solid black;
+}
+
 .trove-content {
     padding: 10px;
     margin: 10px 0px;
@@ -188,6 +194,16 @@
     right: 0;
     top: 0;
 }
+.link {
+    width: 7em;
+    right: 0;
+    top: 0;
+    position: absolute;
+    float: right;
+    color: #666;
+    white-space: nowrap;
+    text-align: right;
+}
 .body {
     overflow: hidden;
     max-height: 10em;
@@ -222,4 +238,21 @@
     background-color: white;
     overflow: auto;
     margin-top: 50px;
+    padding: 10px;
+}
+#box .body {
+}
+
+#box .trove-content-row {
+    margin-top: 3px;
+    margin-bottom: 3px;
+}
+
+#box .heading {
+    font-size: 200%;
+    font-weight: 200;
+}
+
+#box .trove-content-body {
+    border-top: 1px solid black;
 }
