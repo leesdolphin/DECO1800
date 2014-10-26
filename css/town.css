@@ -197,7 +197,7 @@
 .link {
     width: 7em;
     right: 0;
-    top: 0;
+    top: 1.5em;
     position: absolute;
     float: right;
     color: #666;
