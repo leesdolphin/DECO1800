@@ -1,4 +1,6 @@
-
+body {
+    background-image: url('images/paper.png');
+}
 #timeline-padding {
     height: 60px;
     margin-left: 50%;
@@ -241,6 +243,8 @@
     padding: 10px;
 }
 #box .body {
+    max-height: none;
+    overflow: scroll;
 }
 
 #box .trove-content-row {

@@ -102,7 +102,7 @@ window.create_queue = function () {
         c.find('.body').text(text);
         c.find('.heading').text(data.heading);
         c.find('.date').text(data.date);
-        c.find('.link').attr('href', data.troveUrl);
+        c.find('.link a').attr('href', data.troveUrl);
         return c;
     }
 

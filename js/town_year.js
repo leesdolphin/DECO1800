@@ -9,7 +9,7 @@ window.BASE_CONTENT_HTML = "\
                     <div class='date-link-wrapper-table'>\n\
                         <div class='date'></div>\n\
                         <div class='link'>\n\
-                            <a class='preview-hidden'>Link to Trove</a>\n\
+                            <a class='preview-hidden' target='_blank'>Link to Trove</a>\n\
                         </div>\n\
                     </div>\n\
                 </div>\n\
@@ -40,6 +40,7 @@ window.TroveYear = function () {
         }
         this.do_layout(true);
         $(window).scrollTop(0);
+        $("#navbar-loading-contaner-fill").width("0%");
         TroveMonth.update_current_month();
         TroveMonth.update_month_status();
         this.update_current_year();
