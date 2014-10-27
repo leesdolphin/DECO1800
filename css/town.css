@@ -241,6 +241,7 @@
     padding: 10px;
 }
 #box .body {
+    overflow: visible;
 }
 
 #box .trove-content-row {
