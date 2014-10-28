@@ -138,11 +138,11 @@ window.TownPictureHelper = function () {
 
     /*
      * This function returns a dictionary with the keys `preview` and `full` and whose values are functions:
-     * 
+     *
      * preview: Should return a jQuery html object that can be displayed as a preview
-     * 
+     *
      * full:    Should return a jQuery html object that can be displayed as the full view(in a popup).
-     * 
+     *
      */
     TownPictureHelper_.prototype.get_function_for_data = function (data) {
         if (data["identifier"] === undefined) {

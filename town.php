@@ -5,7 +5,6 @@ if (!isset($_GET["town"])) {
     return;
 }
 
-/*
 include './include/database.php';
 
 $con = create_con();
@@ -21,7 +20,6 @@ if($num_rows == 0) {
     header('Location: index.php?invalid&town=' . urlencode($town), 304);
     return;
 }
-*/
 
 ?>
 <!DOCTYPE html>
