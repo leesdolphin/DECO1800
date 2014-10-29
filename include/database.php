@@ -10,7 +10,7 @@ function create_con() {
     $dbhost = "localhost";
     $dbuser = "site";
     $dbpass = "pass";
-    $dbname = "TOWN";
+    $dbname = "NEWTOWN";
 
     $con = new mysqli($dbhost, $dbuser, $dbpass, $dbname);
     if (mysqli_connect_errno()) {
