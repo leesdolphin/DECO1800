@@ -23,6 +23,10 @@ window.TroveDB = function () {
             return results;
         };
 
+        Database.prototype.get_year_length = function(year) {
+            return this.get_year_data_ids(year).length;
+        }
+
         Database.prototype.get_year_data_ids = function (year) {
             // Get it from the db or return an empty array.
             return this._id_by_year[parseInt(year)] || [];
@@ -162,21 +166,16 @@ window.create_queue = function () {
                 }
             } // TODO add more data types.
         }
-        var displayed = TroveDB.database.get_year_data(queue.start_year).length;
 
-        var total = Math.min(total, MAX_DISPALYED);
+        var total = queue.total = Math.min(total, MAX_DISPALYED);
 
-        var percentage = (total > 0 ? displayed / total : 1) * 100;
-        
-        if (num_ret > 0 && TroveDB.database.get_year_data(queue.start_year).length < MAX_DISPALYED) {
-            // If there was any data returned then try the next page.
-            // This is because displayed can be off by a couple(considering picture's dates are a bit out).
-            TroveDB.trove_loaders.get(TroveYear.year).execute();
-        } else {
+        if (num_ret === 0 || TroveDB.database.get_year_length(queue.start_year) >= MAX_DISPALYED) {
             queue.complete = true;
-            percentage = 100;
+        } else {
+            // Keep loading if there is more(and it doesn't go over our limit.
+            TroveDB.trove_loaders.get(TroveYear.year).execute();
         }
-        $("#navbar-loading-contaner-fill").css("width", percentage + "%");
+
         TroveYear.do_layout();
     }
 

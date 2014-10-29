@@ -98,6 +98,30 @@ window.TroveYear = function () {
     }
 
     TroveYear_.prototype.do_layout = function do_layout(ignore_scroll) {
+        var queue = TroveDB.trove_loaders.get(this.year);
+        var current_year = parseInt($("#navbar-loading-contaner-fill").attr("year")) === this.year
+        var $fill = $("#navbar-loading-contaner-fill")
+
+        if (!current_year) {
+            // Changed year - reset the bar before continuing.
+            $fill.css({"width": "0%", "background-color": "black"});
+            $fill.attr({"year": this.year, "complete": "false"});
+        }
+        if (queue.complete) {
+            if ($fill.attr("complete") === "true") {
+                $fill.css({"width": "0%"});
+            } else {
+                $fill.attr("complete", "true")
+                        .animate({"width": "100%"}, 500).animate({"backgroundColor": "#00dd00"}, 600)
+                        .animate({"backgroundColor": "black"}, 200);
+            }
+        } else {
+            var displayed = TroveDB.database.get_year_length(this.year);
+            var percentage = (queue.total ? displayed / queue.total : 0) * 100;
+            $("#navbar-loading-contaner-fill").animate({"width": percentage + "%"}, 500);
+        }
+
+
         if (ignore_scroll || $("#timeline").children().length === 0) {
             // Nothing in timeline. Just ignore the scrolling stuff.
             ignore_scroll = true;
@@ -106,19 +130,19 @@ window.TroveYear = function () {
             ignore_scroll = 1 + $(window).scrollTop(); // Truthy(evaluatues to true when used in an if statement)
         }
 
-        $("#timeline .month-container").each(function (idx, month) {
-            layout_month_internal(month);
-
-            $myNav = $("#navbar-month-" + $(month).attr("month"));
-            $myNav.removeClass("navbar-month-missing");
-        });
-
         if (!ignore_scroll) {
             // Select all `month-container`s that are on the screen.
             var $w = $(window);
             var $aDateShown = $(".month-container:onScreen").first();
             var deltaOffset = $w.scrollTop() - $aDateShown.offset().top;
         }
+        
+        $("#timeline .month-container").each(function (idx, month) {
+            layout_month_internal(month);
+
+            $myNav = $("#navbar-month-" + $(month).attr("month"));
+            $myNav.removeClass("navbar-month-missing");
+        });
 
         if (!ignore_scroll) {
             var scroll = $w.scrollTop();
