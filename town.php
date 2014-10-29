@@ -17,8 +17,8 @@ $num_rows = $stmt->num_rows();
 clean($con, $stmt);
 
 if($num_rows == 0) {
-//    header('Location: index.php?invalid&town=' . urlencode($town), 304);
-//    return;
+    header('Location: index.php?invalid&town=' . urlencode($town), 304);
+    return;
 }
 
 ?>
