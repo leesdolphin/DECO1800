@@ -121,7 +121,7 @@ window.TroveYear = function () {
             $fill.animate({"width": percentage + "%"}, 500);
         }
 
-        if(displayed === 0) {
+        if(displayed === 0 && queue.complete) {
             $("#timeline").empty().append("<div class='no-content'><strong>Sorry</strong> there is no data avaliable.</div>");
             return;
         } else {
