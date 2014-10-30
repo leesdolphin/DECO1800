@@ -99,8 +99,9 @@ window.TroveYear = function () {
 
     TroveYear_.prototype.do_layout = function do_layout(ignore_scroll) {
         var queue = TroveDB.trove_loaders.get(this.year);
-        var current_year = parseInt($("#navbar-loading-contaner-fill").attr("year")) === this.year
-        var $fill = $("#navbar-loading-contaner-fill")
+        var current_year = parseInt($("#navbar-loading-contaner-fill").attr("year")) === this.year;
+        var $fill = $("#navbar-loading-contaner-fill");
+        var displayed = TroveDB.database.get_year_length(this.year);
 
         if (!current_year) {
             // Changed year - reset the bar before continuing.
@@ -116,11 +117,16 @@ window.TroveYear = function () {
                         .animate({"backgroundColor": "black"}, 200);
             }
         } else {
-            var displayed = TroveDB.database.get_year_length(this.year);
             var percentage = (queue.total ? displayed / queue.total : 0) * 100;
-            $("#navbar-loading-contaner-fill").animate({"width": percentage + "%"}, 500);
+            $fill.animate({"width": percentage + "%"}, 500);
         }
 
+        if(displayed === 0) {
+            $("#timeline").empty().append("<div class='no-content'><strong>Sorry</strong> there is no data avaliable.</div>");
+            return;
+        } else {
+            $(".no-content").remove();
+        }
 
         if (ignore_scroll || $("#timeline").children().length === 0) {
             // Nothing in timeline. Just ignore the scrolling stuff.
@@ -154,8 +160,6 @@ window.TroveYear = function () {
 
             $(window).scrollTop(ignore_scroll - 1); // Decode it.
         }
-
-        // Now update the headings at the top.
     };
 
     function layout_month_internal(month_content) {

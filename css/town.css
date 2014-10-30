@@ -2,7 +2,7 @@ body {
     background-image: url('images/paper.png');
 }
 #timeline-padding {
-    height: 60px;
+    height: 50px;
     margin-left: 50%;
     border-left: 1px solid black;
 }
@@ -11,6 +11,11 @@ body {
     margin-right: 15px;
     /* text-top seems to center the spinner the best.*/
     vertical-align: text-top;
+}
+
+.no-content {
+    text-align: center;
+    padding-top: 10px;
 }
 
 .navbar-default {
@@ -121,6 +126,7 @@ body {
     margin-left: 50%;
     border-left: 1px solid black;
     padding-left: 10px;
+    padding-top: 10px;
     font-weight: bold;
     font-size: 200%;
     display: block;
