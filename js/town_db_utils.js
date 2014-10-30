@@ -77,6 +77,13 @@ function parse_date(date_string) {
     }
 }
 
+function get_year(year) {
+    var year = parseInt(year);
+    if ($("#y" + year).length === 0) {
+        make_year(year);
+    }
+    return $("#y" + year);
+}
 function make_year(year) {
     var year = parseInt(year);
     add_ordered_element(year, timeline_db, $("#timeline"), function () {
@@ -92,24 +99,35 @@ function make_year(year) {
 
 function make_month(year, month) {
     var month = parseInt(month);
-    make_year(year);
+    get_year(year);
     var yr_data = timeline_db[year];
     var elm = yr_data.element;
+    var id = "y" + year + "m" + month;
     add_ordered_element(month, yr_data.months, elm, function () {
         // Make the month elements
         var e = $("<div></div>");
-        e.attr("id", "y" + year + "m" + month);
+        e.attr("id", id);
         e.addClass("month-container");
         e.attr("month", month);
         e.attr("year", year);
-        var content = $("<div class='content'>\n\
-        <div class='left-content'></div>\n\
-        <div class='right-content'></div>\n\
-        </div>");
+        var content = $("<div class='content'></div>");
+
         e.append($("<div class='month-heading'>" + MONTH_NAMES[month] + " " + year + "</div>"));
         e.append(content);
         return {
             element: e
         };
     });
+    var $c = $("#" + id + " .content");
+    $c.masonry({
+        "isFitWidth": true,
+        "gutter": 5,
+        "itemSelector": '.trove-content'
+    });
+    $c.imagesLoaded()
+            .progress(function () {
+                TroveYear.do_layout();
+            });
+
+
 }

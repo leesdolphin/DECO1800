@@ -33,6 +33,9 @@ if($num_rows == 0) {
             window.town = <?php echo json_encode($town); ?>;
         </script>
         <link rel="stylesheet" href="css/town.css" />
+        <link rel="stylesheet" href="css/town-responsive.css" />
+        <script src="js/masonry.pkgd.js"></script>
+        <script src="js/imagesloaded.pkgd.js"></script>
         <script src="js/document_utils.js"></script>
         <script src="js/trove.js"></script>
         <script src="js/town_db_utils.js"></script>
