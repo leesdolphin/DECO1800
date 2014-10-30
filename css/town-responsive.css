@@ -1,11 +1,15 @@
 
-@media(min-width: 800px) {
-    .container {
-        width: 800px;
-    }
+.container {
+    width: 100%;
 }
-@media(min-width: 1260px) {
+.trove-content {
+    width: 100%;
+}
+@media(min-width: 640px) {
     .container {
-        width: 1260px;
+        width: 100%;
+    }
+    .trove-content {
+        width: 400px;
     }
 }

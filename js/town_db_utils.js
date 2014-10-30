@@ -122,8 +122,9 @@ function make_month(year, month) {
     $c.masonry({
         "isFitWidth": true,
         "gutter": 5,
-        "itemSelector": '.trove-content'
-    });
+        "itemSelector": '.trove-content',
+        "columnWidth": ".trove-content"
+    }).masonry("bindResize");
     $c.imagesLoaded()
             .progress(function () {
                 TroveYear.do_layout();
