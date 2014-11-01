@@ -1,4 +1,4 @@
-window.MAX_DISPALYED = 400;
+window.MAX_DISPALYED = 2;
 
 window.TroveDB = function () {
     var Database = function () {

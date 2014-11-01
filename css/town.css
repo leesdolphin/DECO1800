@@ -166,6 +166,7 @@ body {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+    overflow: 
 }
 .date {
     position: absolute;
@@ -201,6 +202,26 @@ body {
     margin: 0 auto;
     border: 0;
 }
+#timeline .pdf-hidden{
+    display: none;
+}
+.pdf-hidden{
+    cursor: pointer;
+    text-align: right;
+    position: absolute;
+    top: 3em;
+    float: right;
+    right: 0px;
+}
+.disp-frame{
+    display: none;
+    height: 100%;
+    width: 100%;
+}
+iframe{
+    height: 100%;
+    width: 100%;
+}
 
 /* Lightbox */
 #lightboxContent {
@@ -212,7 +233,12 @@ body {
     left: 0;
     background-color: rgba(150, 150, 150, 0.5);
 }
-
+#box .heading{
+    white-space: normal;
+}
+#box .trove-content-header{
+    min-height: 65px;
+}
 #box {
     border: 1px solid black;
     width: 80%;
@@ -241,4 +267,9 @@ body {
 
 #box .trove-content-body {
     border-top: 1px solid black;
+    height: 90%;
+}
+
+#box .thumbnail{
+    margin: auto;
 }

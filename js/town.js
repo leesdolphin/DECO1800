@@ -41,6 +41,7 @@ $(document).ready(function(){
     
     $("#lightboxContent").click(function(){
         $("#lightboxContent").fadeOut();
+        $("#box .trove-content-body iframe").attr("src", 'about:blank');
     });
 
     $("#box").click(function( event ){
