@@ -101,6 +101,7 @@ window.TroveYear = function () {
                     }
                 });
                 $(".closebox").click(function(){lightboxclose();});
+                $('.pdf-hidden a').html('View on Trove');
                 $("#lightboxContent").fadeIn();
             });
         }
