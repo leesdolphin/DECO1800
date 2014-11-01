@@ -1,5 +1,10 @@
 window.BASE_CONTENT_HTML = "\
     <div>\n\
+        <div class='trove-content-row close-row'>\n\
+            <div class='closebox'>\n\
+                <a>x</a>\n\
+            </div>\n\
+        </div>\n\
         <div class='trove-content-row'>\n\
             <div class='trove-content-header'>\n\
                 <div class='heading-wrapper'>\n\
@@ -95,6 +100,7 @@ window.TroveYear = function () {
                         $('.pdf-hidden a').html('View on Trove');
                     }
                 });
+                $(".closebox").click(function(){lightboxclose();});
                 $("#lightboxContent").fadeIn();
             });
         }

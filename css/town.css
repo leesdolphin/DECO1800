@@ -175,8 +175,8 @@ body {
     white-space: nowrap;
     text-align: right;
     width: 7em;
-    right: 0;
-    top: 0;
+    right: 0px;
+    top: 0px;
 }
 .link {
     width: 7em;
@@ -221,6 +221,13 @@ body {
 iframe{
     height: 100%;
     width: 100%;
+}
+#timeline .close-row{
+    display: none;
+}
+.closebox{
+    text-align: right;
+    cursor: pointer;
 }
 
 /* Lightbox */
