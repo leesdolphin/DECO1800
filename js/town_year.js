@@ -25,8 +25,8 @@ window.BASE_CONTENT_HTML = "\
         </div>\n\
         <div class='trove-content-row trove-content-body'>\n\
             <div class='body'></div>\n\
-            <div class='disp-frame'><iframe src='about:blank'></iframe></div>\n\
         </div>\n\
+        <div class='disp-frame'><iframe src='about:blank'></iframe></div>\n\
     </div>";
 
 
@@ -88,19 +88,20 @@ window.TroveYear = function () {
                 $("#box").empty();
                 $("#box").html($(this).html());
                 $(".pdf-hidden a").click(function(){
-                    $("#box .trove-content-body").children().toggle();
-                    $("#box .trove-content-body iframe").attr("src", data.troveUrl);
-                    
+                    $("#box .trove-content-body .body").toggle();
+                    $("#box .disp-frame").toggle();
                     // We don't want a whole heap of frames with loaded content on the page
-                    if ($("#box .trove-content-body iframe").is(":visible")){
-                        $("#box .trove-content-body iframe").attr("src", data.troveUrl);
+                    if ($("#box iframe").is(":visible")){
+                        $("#box iframe").attr("src", data.troveUrl);
                         $('.pdf-hidden a').html('View page text');
                     } else {                
-                        $("#box .trove-content-body iframe").attr("src", 'about:blank');
+                        $("#box iframe").attr("src", 'about:blank');
                         $('.pdf-hidden a').html('View on Trove');
                     }
                 });
-                $(".closebox").click(function(){lightboxclose();});
+                $(".closebox a").click(function(){lightboxclose();});
+                /*We need to override the old text in the case that the user
+                was viewing the last article on the iframe*/ 
                 $('.pdf-hidden a').html('View on Trove');
                 $("#lightboxContent").fadeIn();
             });

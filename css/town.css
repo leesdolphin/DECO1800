@@ -227,6 +227,8 @@ iframe{
 }
 .closebox{
     text-align: right;
+}
+.closebox a{
     cursor: pointer;
 }
 
@@ -274,7 +276,7 @@ iframe{
 
 #box .trove-content-body {
     border-top: 1px solid black;
-    height: 90%;
+    /*height: 100%;*/
 }
 
 #box .thumbnail{
