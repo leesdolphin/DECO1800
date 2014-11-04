@@ -14,7 +14,7 @@ window.BASE_CONTENT_HTML = "\
                     <div class='date-link-wrapper-table'>\n\
                         <div class='date'></div>\n\
                         <div class='link'>\n\
-                            <a class='preview-hidden' target='_blank'>Link to Trove</a>\n\
+                            <a class='preview-hidden' target='_blank'>Open in new tab</a>\n\
                         </div>\n\
                         <div class='pdf-hidden'>\n\
                             <a>View on Trove</a>\n\
