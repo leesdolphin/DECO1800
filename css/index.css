@@ -64,3 +64,8 @@ body {
 .alert.alert-danger {
     background: rgba(255,0,0,0.2);
 }
+
+#igotthepower{
+    padding: 2px;
+    rgba(0,0,0,0.5);
+}

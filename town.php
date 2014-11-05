@@ -5,7 +5,7 @@ if (!isset($_GET["town"])) {
     return;
 }
 
-/*
+
 include './include/database.php';
 
 $con = create_con();
@@ -21,7 +21,7 @@ if($num_rows == 0) {
     header('Location: index.php?invalid&town=' . urlencode($town), 304);
     return;
 }
- */
+ 
 
 ?>
 <!DOCTYPE html>
@@ -33,6 +33,9 @@ if($num_rows == 0) {
             window.town = <?php echo json_encode($town); ?>;
         </script>
         <link rel="stylesheet" href="css/town.css" />
+        <link rel="stylesheet" href="css/town-responsive.css" />
+        <script src="js/masonry.pkgd.js"></script>
+        <script src="js/imagesloaded.pkgd.js"></script>
         <script src="js/document_utils.js"></script>
         <script src="js/trove.js"></script>
         <script src="js/town_db_utils.js"></script>
@@ -75,5 +78,7 @@ if($num_rows == 0) {
 			<div id="box">this is a test</div>
 		</div>
         
+		<div id='igotthepower' class="navbar-fixed-bottom"><a href='http://trove.nla.gov.au/' target="_blank"><img src='http://trove.nla.gov.au/general-test/files/2012/01/API-dark.png' alt='Powered By Trove' /></a></div>
+		
     </body>
 </html>

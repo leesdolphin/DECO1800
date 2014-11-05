@@ -39,11 +39,14 @@ $(window).ready(function () {
 $(document).ready(function(){
     $("#lightboxContent").hide();
     
-    $("#lightboxContent").click(function(){
-        $("#lightboxContent").fadeOut();
-    });
-
+    $("#lightboxContent").click(function(){lightboxclose();});
+    
     $("#box").click(function( event ){
         event.stopPropagation();
     });
 });
+
+function lightboxclose(){
+    $("#lightboxContent").fadeOut();
+    $("#box .trove-content-body iframe").attr("src", 'about:blank');
+}

@@ -1,4 +1,4 @@
-function build_preview_base(data, image) {
+function build_preview_base(data, image, backup_image) {
     var c = $(BASE_CONTENT_HTML);
     c.addClass("trove-image");
     c.find(".heading").text(data["title"] || "");
@@ -9,7 +9,33 @@ function build_preview_base(data, image) {
         var i = $("<img alt='No preview avaliable'/>")
                 .attr("src", image)
                 .addClass("thumbnail");
+        var l = imagesLoaded(i);
+        var f_all_fail = function (instance, image) {
+            l.off('progress', f_all_fail);
+            if (!image.isLoaded) {
+                c.find(".body").text("No preview avaliable");
+            }
+            l.on('progress', f_use_alt);
+            TroveYear.do_layout();
+        };
+        var f_use_alt = function (instance, image) {
+            l.off('progress', f_use_alt);
+            if (!image.isLoaded) {
+                if (backup_image) {
+                    l.on('progress', f_all_fail);
+                    i.attr("src", backup_image);
+                } else {
+                    f_all_fail(instance, image);
+                }
+            }
+            TroveYear.do_layout();
+        };
+        l.on('progress', f_use_alt);
         c.find(".body").append(i);
+    } else {
+        imagesLoaded(c).on('progress', function() {
+            TroveYear.do_layout();
+        });
     }
 
     return c;
@@ -114,18 +140,10 @@ var missing_image = function () {
 
     return {preview: missing_image_preview};
 }();
-thumbnail_image = function () {
-    function thumbnail_image_preview(data) {
-        return build_preview_base(data, data.images.thumbnail);
-    }
-
-    return {preview: thumbnail_image_preview};
-}();
 full_text_image = function () {
     function full_text_image_preview(data) {
-        return build_preview_base(data, data.images.fulltext);
+        return build_preview_base(data, data.images.fulltext, data.images.thumbnail);
     }
-
     return {preview: full_text_image_preview};
 }();
 
@@ -164,11 +182,9 @@ window.TownPictureHelper = function () {
         } else if (url.match(/flickr.com/i)) {
             return flickr_image;
         } else {
-            if (data.images.thumbnail) {
-                return thumbnail_image;
-            } else if(data.images.fulltext) {
+            if (data.images) {
                 return full_text_image;
-            }else {
+            } else {
                 return missing_image;
             }
         }

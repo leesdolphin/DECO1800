@@ -4,7 +4,7 @@ body {
 #timeline-padding {
     height: 50px;
     margin-left: 50%;
-    border-left: 1px solid black;
+/*    border-left: 1px solid black;*/
 }
 
 #loading-spinner {
@@ -122,11 +122,9 @@ body {
 }
 
 #timeline .month-heading {
-    box-sizing: border-box;
-    margin-left: 50%;
-    border-left: 1px solid black;
-    padding-left: 10px;
-    padding-top: 10px;
+    padding-top: 20px;
+    padding-bottom: 10px;
+    text-align: center;
     font-weight: bold;
     font-size: 200%;
     display: block;
@@ -134,46 +132,18 @@ body {
 }
 
 #timeline .content {
-    display: table;
-    width: 100%;
-}
-
-#timeline .content .right-content, #timeline .content .left-content {
-    padding-left: 10px;
-    padding-right: 10px;
-    box-sizing: border-box;
-    width: 50%;
-    max-width: 50%;
-    height: 100%;
-    display: table-cell;
-    vertical-align: top;
-}
-
-#timeline .content .left-content {
-    clear: left;
-}
-
-#timeline .content .right-content {
-    border-left: 1px solid black;
-    clear: right;
-}
-
-#timeline .date-heading {
-    padding-top: 1px;
-    margin-left: 50%;
-    border-left: 1px solid black;
+    margin: auto;
 }
 
 .trove-content {
     cursor: pointer;
     background-color: rgba(255,255,255,0.3);
     padding: 10px;
-    margin: 10px 0px;
+    margin: 0px;
+    margin-bottom: 5px;
     box-sizing: border-box;
     border: 1px solid black;
-    display: table;
-    table-layout: fixed;
-    width: 100%;
+    width: 400px;
 }
 .trove-content:hover {
     background-color: rgba(255,255,255,0.8);
@@ -196,6 +166,7 @@ body {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+    overflow: 
 }
 .date {
     position: absolute;
@@ -204,8 +175,8 @@ body {
     white-space: nowrap;
     text-align: right;
     width: 7em;
-    right: 0;
-    top: 0;
+    right: 0px;
+    top: 0px;
 }
 .link {
     width: 7em;
@@ -231,6 +202,35 @@ body {
     margin: 0 auto;
     border: 0;
 }
+#timeline .pdf-hidden{
+    display: none;
+}
+.pdf-hidden{
+    cursor: pointer;
+    text-align: right;
+    position: absolute;
+    top: 3em;
+    float: right;
+    right: 0px;
+}
+.disp-frame{
+    display: none;
+    height: 100%;
+    width: 100%;
+}
+iframe{
+    height: 100%;
+    width: 100%;
+}
+#timeline .close-row{
+    display: none;
+}
+.closebox{
+    text-align: right;
+}
+.closebox a{
+    cursor: pointer;
+}
 
 /* Lightbox */
 #lightboxContent {
@@ -242,7 +242,12 @@ body {
     left: 0;
     background-color: rgba(150, 150, 150, 0.5);
 }
-
+#box .heading{
+    white-space: normal;
+}
+#box .trove-content-header{
+    min-height: 65px;
+}
 #box {
     border: 1px solid black;
     width: 80%;
@@ -271,4 +276,14 @@ body {
 
 #box .trove-content-body {
     border-top: 1px solid black;
+    /*height: 100%;*/
+}
+
+#box .thumbnail{
+    margin: auto;
+}
+
+#igotthepower{
+    padding: 2px;
+    rgba(0,0,0,0.5);
 }

@@ -1,5 +1,10 @@
 window.BASE_CONTENT_HTML = "\
     <div>\n\
+        <div class='trove-content-row close-row'>\n\
+            <div class='closebox'>\n\
+                <a>x</a>\n\
+            </div>\n\
+        </div>\n\
         <div class='trove-content-row'>\n\
             <div class='trove-content-header'>\n\
                 <div class='heading-wrapper'>\n\
@@ -9,7 +14,10 @@ window.BASE_CONTENT_HTML = "\
                     <div class='date-link-wrapper-table'>\n\
                         <div class='date'></div>\n\
                         <div class='link'>\n\
-                            <a class='preview-hidden' target='_blank'>Link to Trove</a>\n\
+                            <a class='preview-hidden' target='_blank'>Open in new tab</a>\n\
+                        </div>\n\
+                        <div class='pdf-hidden'>\n\
+                            <a>View on Trove</a>\n\
                         </div>\n\
                     </div>\n\
                 </div>\n\
@@ -18,6 +26,7 @@ window.BASE_CONTENT_HTML = "\
         <div class='trove-content-row trove-content-body'>\n\
             <div class='body'></div>\n\
         </div>\n\
+        <div class='disp-frame'><iframe src='about:blank'></iframe></div>\n\
     </div>";
 
 
@@ -64,7 +73,7 @@ window.TroveYear = function () {
         TroveDB.trove_loaders.get(year || this.year).execute();
     };
 
-    function load_data_to_dom(data, ignore_scroll) {
+    function load_data_to_dom(data) {
         var id = "trove-content-id-" + data.id;
         var sort = (data.day <= 9 ? "0" : "") + data.day + "-" + data.id;
 
@@ -78,23 +87,46 @@ window.TroveYear = function () {
             $(c).click(function () {
                 $("#box").empty();
                 $("#box").html($(this).html());
+                $(".pdf-hidden a").click(function(){
+                    $("#box .trove-content-body .body").toggle();
+                    $("#box .disp-frame").toggle();
+                    // We don't want a whole heap of frames with loaded content on the page
+                    if ($("#box iframe").is(":visible")){
+                        $("#box iframe").attr("src", data.troveUrl);
+                        $('.pdf-hidden a').html('View page text');
+                    } else {                
+                        $("#box iframe").attr("src", 'about:blank');
+                        $('.pdf-hidden a').html('View on Trove');
+                    }
+                });
+                $(".closebox a").click(function(){lightboxclose();});
+                /*We need to override the old text in the case that the user
+                was viewing the last article on the iframe*/ 
+                $('.pdf-hidden a').html('View on Trove');
                 $("#lightboxContent").fadeIn();
             });
         }
 
         var content = get_month_for(data.year, data.month);
 
-        var left = content.find(".left-content");
-        var ll = height_of_children(left);
-        var right = content.find(".right-content");
-        var rl = height_of_children(right);
-
-        if (rl < ll) {
-            right.append(c);
+        if (content.children().length === 0) {
+            content.append(c);
         } else {
-            left.append(c);
+            var added = false;
+            var children = content.children();
+            for (var i = 0; i < children.length; i++) {
+                var child = $(children[i]);
+                var csort = child.attr("sort");
+                if (csort > sort) {
+                    child.before(c);
+                    added = true;
+                    break;
+                }
+            }
+            if (!added) {
+                content.append(c);
+            }
         }
-
     }
 
     TroveYear_.prototype.do_layout = function do_layout(ignore_scroll) {
@@ -121,7 +153,7 @@ window.TroveYear = function () {
             $fill.animate({"width": percentage + "%"}, 500);
         }
 
-        if(displayed === 0 && queue.complete) {
+        if (displayed === 0 && queue.complete) {
             $("#timeline").empty().append("<div class='no-content'><strong>Sorry</strong> there is no data avaliable.</div>");
             return;
         } else {
@@ -142,7 +174,7 @@ window.TroveYear = function () {
             var $aDateShown = $(".month-container:onScreen").first();
             var deltaOffset = $w.scrollTop() - $aDateShown.offset().top;
         }
-        
+
         $("#timeline .month-container").each(function (idx, month) {
             layout_month_internal(month);
 
@@ -163,33 +195,10 @@ window.TroveYear = function () {
     };
 
     function layout_month_internal(month_content) {
-        var content = $(month_content);
-
-        var mapping = {};
-        var contentIds = content.find(".trove-content").map(function (ixd, item) {
-            var s = $(item).attr("sort");
-            mapping[s] = $(item);
-            $(item).detach();
-            return s;
-        }).sort();
-
-        var left = content.find(".left-content");
-        var ll = height_of_children(left);
-        var right = content.find(".right-content");
-        var rl = height_of_children(right);
-
-        var i = 0;
-        for (; i < contentIds.length; i++) {
-            var id = contentIds[i];
-            var elm = $(mapping[id]);
-            if (rl < ll) {
-                right.append(elm);
-                rl += elm.height();
-            } else {
-                left.append(elm);
-                ll += elm.height();
-            }
-        }
+        var content = $(month_content).find(".content");
+        var masonry = content.data('masonry');
+        masonry.reloadItems();
+        masonry.layout();
     }
 
     $(document).ready(function () {
@@ -226,6 +235,12 @@ $(document).ready(function () {
         ;
         $("#navbar-year-container").append($y);
     }
+
+    var l = imagesLoaded($(".container"), function () {
+    });
+    l.on('progress', function () {
+        console.log(arguments);
+    });
 
     function new_timer_fns(left_side, elm_selector) {
         var t = undefined;
