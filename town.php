@@ -78,5 +78,7 @@ if($num_rows == 0) {
 			<div id="box">this is a test</div>
 		</div>
         
+        <div id='igotthepower' class="navbar-fixed-bottom"><a href='http://trove.nla.gov.au/' target="_blank"><img src='http://trove.nla.gov.au/general-test/files/2012/01/API-dark.png' alt='Powered By Trove' /></a></div>
+        
     </body>
 </html>

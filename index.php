@@ -39,8 +39,9 @@
             <div id="mapdiv"></div>
             <!--<div id="mapclose">
             <button type="button" class="btn" id="closebutton">Close Map</button>
-        --></div>
-    </div>
+            </div>-->
+        </div>
+        <div id='igotthepower' class="navbar-fixed-bottom"><a href='http://trove.nla.gov.au/' target="_blank"><img src='http://trove.nla.gov.au/general-test/files/2012/01/API-dark.png' alt='Powered By Trove' /></a></div>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD_BwCPZ-1J8sAyMObpRo0EkoB7D-95Y7E"></script>
     <script type="text/javascript" src="js/index.js"></script>
 </body>
